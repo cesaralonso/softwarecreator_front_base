@@ -1,0 +1,62 @@
+<div class="widgets">
+    <div class="row">
+        <ba-card title="Listado" baCardClass="with-scroll" class="data-table-container">
+            <div class="panel panel-default">
+                <!-- <div class="panel-heading">Información de Empleados</div> -->
+
+                <table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%"></th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="f_ingreso">Fecha de Ingreso</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="nomina">Nomina</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="frec_nomina">Frecuencia de nomina</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="Persona_idPersona">Persona</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="Puesto_idPuesto">Puesto</mfDefaultSorter>
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of mf.data;  let i = index">
+                            <td>
+                                <button (click)="editEmpleadosModalShow(item)" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button>
+                                <button (click)="onDeleteConfirm($event, item.idPersonal)" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                <button (click)="uploadModalShow(item.idPersonal, item.f_ingreso)" class="btn btn-sm btn-success"><i class="fa fa-file"></i></button>
+                                <button (click)="filesModalShow(item.idPersonal)" class="btn btn-sm btn-warning"><i class="fa fa-eye"></i></button>
+                            </td>
+                            <td>{{ item.f_ingreso | date:'dd/MM/y' }}</td>
+                            <td>{{ item.nomina }}</td>
+                            <td>{{ item.frec_nomina }}</td>
+                            <td>{{ item.Persona_idPersona }}</td>
+                            <td>{{ item.Puesto_idPuesto }}</td>
+
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <button (click)="addEmpleadosModalShow()" class="btn btn-success"><i class="fa fa-plus"></i> Agregar</button>
+        </div>
+    </div>
+
+</div>

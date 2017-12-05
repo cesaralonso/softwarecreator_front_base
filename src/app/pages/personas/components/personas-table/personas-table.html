@@ -1,0 +1,66 @@
+<div class="widgets">
+    <div class="row">
+        <ba-card title="Listado" baCardClass="with-scroll" class="data-table-container">
+            <div class="panel panel-default">
+                <!-- <div class="panel-heading">Información de Personas</div> -->
+
+
+                <table class="table table-striped" [mfData]="data | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%"></th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="edad">Edad</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="sexo">Sexo</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="RFC">RFC</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="telefono">Telefono</mfDefaultSorter>
+                            </th>
+                            <th style="width: 15%">
+                                <mfDefaultSorter by="domicilio">Domicilio</mfDefaultSorter>
+                            </th>
+
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of mf.data;  let i = index">
+                            <td>
+                                <button (click)="editPersonasModalShow(item)" class="btn btn-sm btn-info"><i class="fa fa-edit"></i></button>
+                                <button (click)="onDeleteConfirm($event, item.idPersona)" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                <button (click)="uploadModalShow(item.idPersona, item.nombre)" class="btn btn-sm btn-success"><i class="fa fa-file"></i></button>
+                                <button (click)="filesModalShow(item.idPersona)" class="btn btn-sm btn-warning"><i class="fa fa-eye"></i></button>
+                            </td>
+                            <td>{{ item.nombre }}</td>
+                            <td>{{ item.edad }}</td>
+                            <td>{{ item.sexo }}</td>
+                            <td>{{ item.RFC }}</td>
+                            <td>{{ item.telefono }}</td>
+                            <td>{{ item.domicilio }}</td>
+
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <mfBootstrapPaginator [rowsOnPageSet]="[5,10,15]"></mfBootstrapPaginator>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </ba-card>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <button (click)="addPersonasModalShow()" class="btn btn-success"><i class="fa fa-plus"></i> Agregar</button>
+        </div>
+    </div>
+
+</div>
