@@ -1,4 +1,3 @@
-import { UserResponseInterface } from './../admin/components/users/components/usuarios-table/user-response.interface';
 import { LoginResponseInterface } from './login-response.interface';
 import { LoginInterface } from './login.interface';
 import { AuthService } from './../../shared/auth.service';

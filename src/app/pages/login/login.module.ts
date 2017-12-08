@@ -1,4 +1,3 @@
-import { UserService } from './../admin/components/users/components/usuarios-table/user.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppTranslationModule } from '../../app.translation.module';
@@ -21,7 +20,6 @@ import { routing } from './login.routing';
     LoginComponent
   ],
   providers: [
-    UserService
   ]
 })
 export class LoginModule {}
