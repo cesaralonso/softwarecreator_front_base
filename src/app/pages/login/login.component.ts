@@ -1,5 +1,4 @@
 import { UserResponseInterface } from './../admin/components/users/components/usuarios-table/user-response.interface';
-import { UserService } from './../admin/components/users/components/usuarios-table/user.service';
 import { LoginResponseInterface } from './login-response.interface';
 import { LoginInterface } from './login.interface';
 import { AuthService } from './../../shared/auth.service';
@@ -30,7 +29,6 @@ export class LoginComponent {
               protected service: AuthService, 
               private authLocalstorage: AuthLocalstorage,
               private toastrService: ToastrService,
-              private userService: UserService,
               private router: Router) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
