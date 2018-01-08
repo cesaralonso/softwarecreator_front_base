@@ -21,7 +21,7 @@ export class UploadModalService {
     }
     
     setFile = (archivo: any): Observable<any> =>  {
-        this.actionUrl = `${this._configuration.imageServerWithApiUrl}uploadImagen/`;
+        this.actionUrl = `${this._configuration.imageServerWithApiUrl}images/`;
         const toAdd = JSON.stringify(archivo);
 
         return this._http.post(this.actionUrl, toAdd, { headers: this.headers })

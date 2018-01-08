@@ -32,7 +32,7 @@ export class UploadModalComponent implements OnInit {
   };
 
   fileUploaderOptions: NgUploaderOptions = {
-    url: `${this._configuration.imageServerWithApiUrl}uploadImagen/`,
+    url: `${this._configuration.imageServerWithApiUrl}images/`,
   };
 
   uploadCompled(event: any) {
