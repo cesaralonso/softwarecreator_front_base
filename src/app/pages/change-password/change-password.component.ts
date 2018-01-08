@@ -70,6 +70,7 @@ export class ChangePasswordComponent {
       const credentials: LoginInterface = {
         email: values.email,
         password: values.password,
+        recordarSesion: false
       };
 
       this.authService

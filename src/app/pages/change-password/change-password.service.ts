@@ -9,7 +9,6 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class ChangePasswordService {
 
-
     private headers: Headers;
 
     constructor(private http: Http, private configuration: Configuration) {
@@ -31,7 +30,5 @@ export class ChangePasswordService {
         console.error(error);
         return Observable.throw(error.json().error || 'Server error');
     }
-
-
 
 }

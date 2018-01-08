@@ -27,8 +27,19 @@ import { PagesModule } from './pages/pages.module';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
 import { LocalStorageModule } from 'angular-2-local-storage';
+
+import { AuthHttp, AuthConfig } from 'angular2-jwt';
+import { Http, RequestOptions } from '@angular/http';
+ 
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({
+        tokenName: 'token',
+        tokenGetter: (() => sessionStorage.getItem('token')),
+        globalHeaders: [{'Content-Type':'application/json'}],
+    }), http, options);
+}
+
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -76,6 +87,11 @@ export type StoreType = {
     AuthGuard,
     AuthService,
     AuthLocalstorage,
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    }
   ]
 })
 

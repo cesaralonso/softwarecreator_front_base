@@ -16,7 +16,7 @@ import { routing }       from './change-password.routing';
     ReactiveFormsModule,
     FormsModule,
     NgaModule,
-    routing,
+    routing
   ],
   declarations: [
     ChangePasswordComponent,

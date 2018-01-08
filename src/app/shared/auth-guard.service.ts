@@ -7,15 +7,15 @@ import {
 } from '@angular/router';
 import { AuthService } from './auth.service';
 
+
 @Injectable()
 export class AuthGuard implements CanActivate {
+
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url: string = state.url;
-
-    // return this.checkLogin(url);
-    return true;
+    return this.checkLogin(url);
   }
 
   canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
@@ -23,13 +23,33 @@ export class AuthGuard implements CanActivate {
   }
 
   checkLogin(url: string): boolean {
-    if (this.authService.isLoggedIn) { return true; }
 
-    // Store the attempted URL for redirecting
-    this.authService.redirectUrl = url;
+    let isAuthorized: boolean;
 
-    // Navigate to the login page with extras
-    this.router.navigate(['/login']);
-    return false;
+    if(this.authService.loggedIn()) {
+      //Módulos permitidos
+      if (!this.authService.modulePermission(url)) {
+        isAuthorized = false;
+        console.log("sin permiso");
+      } else {
+        isAuthorized = true;
+        console.log("con permiso");
+      }
+    } else {
+      isAuthorized = false;
+      console.log("sin autorización");
+    }
+
+    if(isAuthorized) {
+      return true;
+    } else {
+      // Store the attempted URL for redirecting
+      // this.authService.redirectUrl = url;
+
+      // Navigate to the login page with extras
+      this.router.navigate(['/pages/unauthorized']);
+      return false;
+    }
+
   }
 }

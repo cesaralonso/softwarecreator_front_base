@@ -14,28 +14,16 @@ export class BaPageTop {
 
   isScrolled: boolean = false;
   isMenuCollapsed: boolean = false;
-
   isAuth: boolean;
-
-  profileAvatar: string;
 
   constructor(
     private _state: GlobalState, 
-    private authService: AuthService, 
-    private router: Router, 
-    private toastrService: ToastrService) {
+    private authService: AuthService) {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
 
     this.isAuth = this.authService.isLoggedIn;
-    
-    this.authService.profileAvatar()
-      .then(
-        (data) => {
-          this.profileAvatar = data;
-        },
-      );
   }
 
   toggleMenu() {
@@ -49,10 +37,7 @@ export class BaPageTop {
   }
 
   logout() {
-    this.isAuth = false;
     this.authService.logout();
-    // this.router.navigate(['login']);
-    this.toastrService.success('Has cerrado sesión correctamente');
   }
 
 }

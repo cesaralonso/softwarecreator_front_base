@@ -1,14 +1,12 @@
 import { LoginResponseInterface } from './login-response.interface';
 import { LoginInterface } from './login.interface';
 import { AuthService } from './../../shared/auth.service';
-import { AuthLocalstorage } from './../../shared/auth-localstorage.service';
 import { Component } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'angular-2-local-storage';
-
+import { EmailValidator } from '../../theme/validators';
 
 @Component({
   selector: 'login',
@@ -16,28 +14,31 @@ import { LocalStorageService } from 'angular-2-local-storage';
   styleUrls: ['./login.scss']
 })
 export class LoginComponent {
-
   items: any;
-
   form: FormGroup;
   email: AbstractControl;
   password: AbstractControl;
+  recordarSesion: AbstractControl;
   submitted: boolean = false;
 
   constructor(fb: FormBuilder,
               protected service: AuthService, 
-              private authLocalstorage: AuthLocalstorage,
+              private localStorageService: LocalStorageService,
               private toastrService: ToastrService,
               private router: Router) {
+
+    let recordar = (localStorage.getItem('recordarSesion') === 'true') ? true : false;
+
     this.form = fb.group({
-      'email': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
-      'password': ['', Validators.compose([Validators.required, Validators.minLength(2)])],
+      'email': ['', Validators.compose([Validators.required, EmailValidator.validate])],
+      'password': ['', Validators.compose([Validators.required, Validators.minLength(5)])],
+      'recordarSesion': [recordar]
     });
 
     this.email = this.form.controls['email'];
     this.password = this.form.controls['password'];
+    this.recordarSesion = this.form.controls['recordarSesion'];
   }
-
 
   onSubmit(values: LoginInterface): void {
     this.submitted = true;
@@ -45,19 +46,9 @@ export class LoginComponent {
       this.service
         .login(values)
         .subscribe(
-            (response: LoginResponseInterface) => this.showModal(response, values));
+            (response: LoginResponseInterface) => console.log(response));
     }
   }
 
-  private showModal(response: LoginResponseInterface, credentials: LoginInterface) {
-    if (response.success) {
-      this.toastrService.success(response.message);
-      this.authLocalstorage.setCredentials(credentials, response);
-      this.router.navigate(['pages/dashboard']);
-    } else {
-      this.toastrService.error(response.message);
-      this.authLocalstorage.clearAll();
-    }
-  }
 
 }

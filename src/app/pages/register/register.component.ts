@@ -39,7 +39,6 @@ export class Register {
   public onSubmit(values:Object):void {
     this.submitted = true;
     if (this.form.valid) {
-      // your code goes here
       // console.log(values);
     }
   }

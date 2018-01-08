@@ -15,7 +15,8 @@
     "usuario": "Usuario",
     "clave": "Clave",
     "sign_in": "Accesar",
-    "forgot_password": "¿Olvidaste tu password?"
+    "forgot_password": "¿Olvidaste tu password?",
+    "remember_session": "Recordar sesión"
   },
   "forgot": {
     "title": "Recordar contraseña",
