@@ -1,12 +1,10 @@
 import { ToastrService } from 'ngx-toastr';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { UploadModalService } from './upload-modal.service';
-
-import { AuthLocalstorage } from './../../../shared/auth-localstorage.service';
-import { CredentialsInterface } from './../../../shared/credentials.interface';
 import { Response } from '@angular/http';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { NgUploaderOptions } from 'ngx-uploader';
+import { Configuration } from './../../../app.constants';
 
 export interface ArchivoInterface {
   idreferencia: number;
@@ -22,8 +20,6 @@ export interface ArchivoInterface {
 })
 export class UploadModalComponent implements OnInit {
 
-  private credentials: CredentialsInterface = this.authLocalstorage.getCredentials();
-
   id: number;
   descripcion: string;
   referencia: string;
@@ -32,11 +28,11 @@ export class UploadModalComponent implements OnInit {
   defaultPicture = 'assets/img/theme/no-photo.png';
 
   profile: any = {
-    picture: 'assets/images/file.png',
+    picture: 'assets/img/theme/no-photo.png',
   };
 
   fileUploaderOptions: NgUploaderOptions = {
-    url: `http://aidihosting.com/proyectos/proyectura_api/v1/uploadImagen/${this.referencia}-`,
+    url: `${this._configuration.imageServerWithApiUrl}uploadImagen/`,
   };
 
   uploadCompled(event: any) {
@@ -67,9 +63,9 @@ export class UploadModalComponent implements OnInit {
   }
 
   constructor(private service: UploadModalService, 
-              private authLocalstorage: AuthLocalstorage, 
               private activeModal: NgbActiveModal,
-              private toastrService: ToastrService) {
+              private toastrService: ToastrService, 
+              private _configuration: Configuration ) {
   }
 
   closeModal() {
