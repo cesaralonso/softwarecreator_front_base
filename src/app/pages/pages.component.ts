@@ -18,7 +18,7 @@ import { PAGES_MENU } from './pages.menu';
     <footer class="al-footer clearfix">
       <div class="al-footer-right" translate>PROJECTNAME</div>
       <div class="al-footer-main clearfix">
-        <div class="al-copy">&copy; Software Insights 2017</div>
+        <div class="al-copy">&copy; Software Insights 2018</div>
         <ul class="al-share clearfix">
           <li></li>
         </ul>
