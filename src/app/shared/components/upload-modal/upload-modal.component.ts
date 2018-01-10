@@ -55,10 +55,10 @@ export class UploadModalComponent implements OnInit {
   }
 
   showToast(data) {
-    if (data.idRespuesta === 0) {
-      this.toastrService.success(data.mensajeRespuesta);
+    if (data.status === 'success') {
+      this.toastrService.success(data.message);
     } else {
-      this.toastrService.error(data.mensajeRespuesta);
+      this.toastrService.error(data.message);
     }
   }
 
