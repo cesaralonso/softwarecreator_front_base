@@ -17,7 +17,7 @@ export class AuthService {
     
     token: string;
     jwtHelper: JwtHelper = new JwtHelper();
-    user_modules: Array<string> = [];
+    user_modules: any[];
     isLoggedIn: boolean = false;
     recordarSesion: boolean = false;
 
@@ -87,7 +87,7 @@ export class AuthService {
                     console.log("modules from login", modules);
                     
                     localStorage.setItem('token', response.token);
-                    if(values.recordarSesion) {
+                    if (values.recordarSesion) {
                         localStorage.setItem('isLoggedIn', 'true');
                         localStorage.setItem('user_modules', JSON.stringify(modules));
                     }
@@ -106,7 +106,7 @@ export class AuthService {
 
     logout(): void {
         this.isLoggedIn = false;
-        if(this.recordarSesion) {
+        if (this.recordarSesion) {
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('token');
             localStorage.removeItem('user_modules');
@@ -130,13 +130,13 @@ export class AuthService {
         if (this.user_modules) {
             return this.user_modules;
         } else {
-            return 0;
+            return [];
         }
     }
 
     getUserModulesPaths() {
-        let user_modules = JSON.parse(JSON.stringify(this.user_modules));
-        let modules: Array<string> = [];
+        const user_modules = JSON.parse(JSON.stringify(this.user_modules));
+        const modules: string[] = [];
         user_modules.forEach(element => {
             modules.push(element.path);
         });
@@ -152,7 +152,7 @@ export class AuthService {
     }
     
     modulePermission(module_path: string) {
-        let modules = this.getUserModulesPaths();
+        const modules = this.getUserModulesPaths();
         if (modules.indexOf(module_path) >= 0){
             return true;
         } else {

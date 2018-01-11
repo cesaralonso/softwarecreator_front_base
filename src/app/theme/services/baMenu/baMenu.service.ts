@@ -1,3 +1,4 @@
+import { AuthService } from './../../../shared/auth.service';
 import {Injectable} from '@angular/core';
 import {Router, Routes} from '@angular/router';
 import * as _ from 'lodash';
@@ -7,10 +8,18 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 @Injectable()
 export class BaMenuService {
   menuItems = new BehaviorSubject<any[]>([]);
+  // Obtiene módulos de usuario
+  _menuItems: any[];
 
   protected _currentMenuItem = {};
 
-  constructor(private _router:Router) { }
+  constructor(
+    private _router: Router,
+    private authService: AuthService,
+    ) { 
+      // Obtiene módulos de usuario
+      this._menuItems = this.authService.getUserModules();
+    }
 
   /**
    * Updates the routes in the menu
@@ -33,6 +42,14 @@ export class BaMenuService {
 
   public selectMenuItem(menuItems:any[]):any[] {
     let items = [];
+    
+    // Obtiene módulos con acceso
+    let auth_items = [];
+    this._menuItems.forEach((item) => {
+      let nombre = item.nombre + 's';
+      auth_items.push(nombre);
+    });
+
     menuItems.forEach((item) => {
       this._selectItem(item);
 
@@ -43,8 +60,14 @@ export class BaMenuService {
       if (item.children && item.children.length > 0) {
         item.children = this.selectMenuItem(item.children);
       }
-      items.push(item);
+
+      // Si item path está dentro de módulos permitidos
+      if (auth_items.indexOf(item.route.path) > -1) {
+        items.push(item);
+      }
+
     });
+
     return items;
   }
 
