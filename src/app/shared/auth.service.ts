@@ -106,6 +106,7 @@ export class AuthService {
 
     logout(): void {
         this.isLoggedIn = false;
+        this.user_modules = [];
         if (this.recordarSesion) {
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('token');
