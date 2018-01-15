@@ -136,12 +136,16 @@ export class AuthService {
     }
 
     getUserModulesPaths() {
-        const user_modules = JSON.parse(JSON.stringify(this.user_modules));
-        const modules: string[] = [];
-        user_modules.forEach(element => {
-            modules.push(element.path);
-        });
-        return modules;
+        if (this.user_modules !== undefined) {
+            const user_modules = JSON.parse(JSON.stringify(this.user_modules));
+            const modules: string[] = [];
+            user_modules.forEach(element => {
+                modules.push(element.path);
+            });
+            return modules;
+        } else {
+            return [];
+        }
     }
 
     isAuthenticated() {
