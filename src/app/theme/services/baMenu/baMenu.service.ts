@@ -47,7 +47,11 @@ export class BaMenuService {
     let auth_items = [];
     this._menuItems.forEach((item) => {
       const nombre = `${item.nombre}s`;
-      auth_items.push(nombre);
+      
+      // IMPLEMENTADO 29/03/2018
+      if (item.acceso) {
+        auth_items.push(nombre);
+      }
     });
     menuItems.forEach((item) => {
       this._selectItem(item);

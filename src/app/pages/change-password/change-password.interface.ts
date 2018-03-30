@@ -1,7 +1,7 @@
 export interface ChangePasswordInterface {
-    contrasena: string;
-    idusuario: number;
-    contrasenas: {
+    password: string;
+    email: number;
+    contrasenas?: {
         nuevacontrasena: string;
     };
 }

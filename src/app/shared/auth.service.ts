@@ -72,6 +72,7 @@ export class AuthService {
                         let path = '/pages/' + element.nombre.toLowerCase() + 's';
                         modules.push({
                             "nombre": element.nombre, 
+                            'acceso': element.acceso, 
                             "path": path, 
                             "readable": element.readable, 
                             "writeable": element.writeable, 

@@ -23,15 +23,15 @@ export class ChangePasswordComponent {
 
   form: FormGroup;
   idusuario: AbstractControl;
-  nuevacontrasena: AbstractControl;
-  anteriorcontrasena: AbstractControl;
+  nuevopassword: AbstractControl;
+  anteriorpassword: AbstractControl;
   password: AbstractControl;
-  repetircontrasena: AbstractControl;
+  repetirpassword: AbstractControl;
   submitted: boolean = false;
-  contrasena: AbstractControl;
-  contrasenas: FormGroup;
+  passwords: FormGroup;
 
-  private _idusuario: string;
+  private iduser: string;
+  private email: string;
   
 
   constructor(fb: FormBuilder,
@@ -44,22 +44,22 @@ export class ChangePasswordComponent {
     private localStorageService: LocalStorageService,
     ) {
 
-    this._idusuario = this.localStorageService.get('idusuario').toString();
+    this.iduser = localStorage.getItem('iduser');
+    this.email = localStorage.getItem('email');
 
     this.form = fb.group({
-      'idusuario': this._idusuario,
-      'contrasena': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-      'contrasenas': fb.group({
-        'nuevacontrasena': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-        'repetircontrasena': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
-      }, { validator: EqualPasswordsValidator.validate('nuevacontrasena', 'repetircontrasena') })
+      'idusuario': this.iduser,
+      'password': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      'passwords': fb.group({
+        'nuevopassword': ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+        'repetirpassword': ['', Validators.compose([Validators.required, Validators.minLength(6)])]
+      }, { validator: EqualPasswordsValidator.validate('nuevopassword', 'repetirpassword') })
     });
 
-    this.contrasena = this.form.controls['contrasena'];
-    this.contrasenas = <FormGroup> this.form.controls['contrasenas'];
-    this.nuevacontrasena = this.contrasenas.controls['nuevacontrasena'];
-    this.repetircontrasena = this.contrasenas.controls['repetircontrasena'];
-
+    this.password = this.form.controls['password'];
+    this.passwords = <FormGroup> this.form.controls['passwords'];
+    this.nuevopassword = this.passwords.controls['nuevopassword'];
+    this.repetirpassword = this.passwords.controls['repetirpassword'];
   }
 
   onSubmit(values: LoginInterface): void {
@@ -68,9 +68,9 @@ export class ChangePasswordComponent {
 
       // Valida usuario contra contraseña anterior del usuario
       const credentials: LoginInterface = {
-        email: values.email,
-        password: values.password,
-        recordarSesion: false
+        'email': this.email,
+        'password': values.password,
+        'recordarSesion': false,
       };
 
       this.authService
@@ -82,28 +82,29 @@ export class ChangePasswordComponent {
 
   private changePassword(response: LoginResponseInterface, valuesChangePasswordForm: any) {
     if (response.success) {
-      // Si fue validado el usuario con la contraseña anterior procede con el cambio de contrasena
-      const newPassword = {
-        idusuario: valuesChangePasswordForm.idusuario,
-        contrasena: valuesChangePasswordForm.contrasenas.nuevacontrasena,
+      // Si fue validado el usuario con la contraseña anterior procede con el cambio de password
+      const newPassword: LoginInterface = {
+        'idsi_user': +this.iduser,
+        'email': valuesChangePasswordForm.email,
+        'password': valuesChangePasswordForm.passwords.nuevopassword,
       };
 
       this.service
-        .ChangePassword(newPassword)
+        .changePassword(newPassword)
         .subscribe(
-            (data: ChangePasswordResponseInterface) => this.showToast(data));
+            (data: LoginResponseInterface) => this.showToast(data));
 
     } else {
-      // this.toastrService.error(response.result);
+      this.toastrService.error(response.message);
     }
   }
 
-  private showToast(data: ChangePasswordResponseInterface) {
+  private showToast(data: LoginResponseInterface) {
     if (data.success) {
-      // this.toastrService.success(data.result);
+      this.toastrService.success(data.message);
       this.router.navigate(['login']);
     } else {
-      // this.toastrService.error(data.result);
+      this.toastrService.error(data.message);
     }
   }
 
