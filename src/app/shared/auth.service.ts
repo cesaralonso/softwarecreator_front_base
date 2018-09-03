@@ -85,6 +85,10 @@ export class AuthService {
                         });
                     });
                     this.user_modules = modules;
+                    
+                    // IMPLEMENTADO PARA CHANGE-PASSWORD
+                    localStorage.setItem('iduser', response.iduser);
+                    localStorage.setItem('email', response.email);
 
                     localStorage.setItem('token', response.token);
                     if (values.recordarSesion) {
