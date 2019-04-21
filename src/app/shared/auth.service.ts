@@ -1,28 +1,29 @@
+
+import {throwError as observableThrowError, Observable, throwError } from 'rxjs';
+
+import {tap, catchError, map} from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+
+
+
 import { Configuration } from './../app.constants';
 import { LoginInterface } from './../pages/login/login.interface';
 import { LoginResponseInterface } from './../pages/login/login-response.interface';
-import { tokenNotExpired, JwtHelper } from 'angular2-jwt';
- 
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable()
 export class AuthService {
     
     token: string;
-    jwtHelper: JwtHelper = new JwtHelper();
     user_modules: any[];
     isLoggedIn: boolean = false;
     recordarSesion: boolean = false;
 
     loggedIn() {
-        return tokenNotExpired();
+        return this.jwtHelper.isTokenExpired();
     }
 
     toBoolean(object: any): boolean {
@@ -33,15 +34,16 @@ export class AuthService {
     redirectUrl: string;
 
     private actionUrl: string;
-    private headers: Headers;
+    private headers: HttpHeaders;
 
     constructor(
-        private _http: Http, 
+        private _http: HttpClient, 
         private _configuration: Configuration,
         private router: Router, 
-        private toastrService: ToastrService) {
+        private toastrService: ToastrService,
+        public jwtHelper: JwtHelperService) {
 
-        this.headers = new Headers();
+        this.headers = new HttpHeaders();
         this.headers.append('Content-Type', 'application/json; charset=UTF-8');
 
         // Recordar la sesión desde LocalStorage
@@ -57,10 +59,10 @@ export class AuthService {
     login(values: LoginInterface): Observable<any> {
         this.actionUrl = `${this._configuration.ServerWithApiUrl}si_user/login`;
         const toAdd = JSON.stringify(values);
-        return this._http.post(this.actionUrl, toAdd, { headers: this.headers })
-            .map((response: Response) => <any>response.json())
-            .catch(this.handleError)
-            .do(response => {
+        return this._http.post(this.actionUrl, toAdd, { headers: this.headers }).pipe(
+            map((response: HttpResponse<any>) => <any>response),
+            catchError(this.handleError),
+            tap(response => {
                 this.isLoggedIn = true;
                 this.token = response.token;
                 this.recordarSesion = values.recordarSesion;
@@ -71,17 +73,17 @@ export class AuthService {
                     response.modules.forEach(element => {
                         let path = '/pages/' + element.nombre.toLowerCase() + 's';
                         modules.push({
-                            "nombre": element.nombre, 
+                            'nombre': element.nombre, 
                             'acceso': element.acceso, 
-                            "path": path, 
-                            "readable": element.readable, 
-                            "writeable": element.writeable, 
-                            "deleteable": element.deleteable, 
-                            "updateable": element.updateable, 
-                            "read_own": element.read_own, 
-                            "write_own": element.write_own, 
-                            "delete_own": element.delete_own, 
-                            "update_own": element.update_own
+                            'path': path, 
+                            'readable': element.readable, 
+                            'writeable': element.writeable, 
+                            'deleteable': element.deleteable, 
+                            'updateable': element.updateable, 
+                            'read_own': element.read_own, 
+                            'write_own': element.write_own, 
+                            'delete_own': element.delete_own, 
+                            'update_own': element.update_own
                         });
                     });
                     this.user_modules = modules;
@@ -105,7 +107,7 @@ export class AuthService {
                 } else {
                     this.toastrService.error(response.message);
                 }
-            });
+            }),);
     }
 
     logout(): void {
@@ -130,6 +132,9 @@ export class AuthService {
             return false;
         }
     }
+
+
+
         
     getUserModules() {
         if (this.user_modules) {
@@ -169,9 +174,9 @@ export class AuthService {
         }
     }
 
-    private handleError(error: Response) {
-        console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+    private handleError(error: any) {
+        console.log(error);
+        return throwError(error || 'Server error');
     }
 
 }

@@ -1,4 +1,4 @@
 export * from './baProfilePicture';
 export * from './baAppPicture';
 export * from './baKameleonPicture';
-export * from './shared';
+// export * from './shared';

@@ -1,6 +1,6 @@
 import { ToastrService } from 'ngx-toastr';
 import { FilesUploadModalService } from './file-upload-modal.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Response } from '@angular/http';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 
@@ -19,12 +19,12 @@ export class FilesUploadModalComponent implements OnInit {
   files: any[];
 
   constructor(private service: FilesUploadModalService, 
-              private activeModal: NgbActiveModal,
+              private activeModal: BsModalService,
               private toastrService: ToastrService) {
   }
 
   closeModal() {
-    this.activeModal.close();
+    this.activeModal.hide(1);
   }
 
   ngOnInit() {

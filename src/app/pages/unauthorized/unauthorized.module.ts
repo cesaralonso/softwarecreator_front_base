@@ -4,9 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule as AngularFormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppTranslationModule } from '../../app.translation.module';
 import { NgaModule } from '../../theme/nga.module';
-import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { DataTableModule } from 'angular2-datatable';
-import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { routing } from './unauthorized.routing';
 import { UnauthorizedComponent } from './unauthorized.component';
 
@@ -17,10 +15,8 @@ import { UnauthorizedComponent } from './unauthorized.component';
     AppTranslationModule,
     ReactiveFormsModule,
     NgaModule,
-    NgbRatingModule,
     routing,
     DataTableModule,
-    NgbModalModule,
     BootstrapModalModule.forRoot({ container: document.body })  
   ],
   declarations: [

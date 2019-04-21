@@ -1,9 +1,9 @@
 import { ToastrService } from 'ngx-toastr';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { UploadModalService } from './upload-modal.service';
 import { Response } from '@angular/http';
 import { Component, OnInit, EventEmitter } from '@angular/core';
-import { NgUploaderOptions } from 'ngx-uploader';
+import { UploaderOptions } from 'ngx-uploader';
 import { Configuration } from './../../../app.constants';
 
 export interface ArchivoInterface {
@@ -31,8 +31,11 @@ export class UploadModalComponent implements OnInit {
     picture: 'assets/img/theme/no-photo.png',
   };
 
-  fileUploaderOptions: NgUploaderOptions = {
+  /*fileUploaderOptions: UploaderOptions = {
     url: `${this._configuration.imageServerWithApiUrl}images/`,
+  };*/
+  fileUploaderOptions: UploaderOptions = {
+    concurrency: 0,
   };
 
   uploadCompled(event: any) {
@@ -49,7 +52,7 @@ export class UploadModalComponent implements OnInit {
           .subscribe(
             (data: any) => this.showToast(data),
             error => console.log(error),
-            () => this.activeModal.close());
+            () => this.activeModal.hide(1));
       }
     }
   }
@@ -63,13 +66,13 @@ export class UploadModalComponent implements OnInit {
   }
 
   constructor(private service: UploadModalService, 
-              private activeModal: NgbActiveModal,
+              private activeModal: BsModalService,
               private toastrService: ToastrService, 
               private _configuration: Configuration ) {
   }
 
   closeModal() {
-    this.activeModal.close();
+    this.activeModal.hide(1);
   }
 
   ngOnInit() {

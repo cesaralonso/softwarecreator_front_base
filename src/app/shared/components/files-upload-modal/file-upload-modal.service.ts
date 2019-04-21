@@ -1,10 +1,13 @@
+
+import {throwError as observableThrowError,  Observable } from 'rxjs';
+
+import {map, catchError} from 'rxjs/operators';
 import { Configuration } from './../../../app.constants';
-import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers } from '@angular/http';
 
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
+
+
 
 @Injectable()
 export class FilesUploadModalService {
@@ -23,22 +26,22 @@ export class FilesUploadModalService {
     getFiles = (idreferencia: number, proceso: string): Observable<any> =>  {
         this.actionUrl = `${this._configuration.imageServerWithApiUrl}images/${idreferencia}/${proceso}`;
 
-        return this._http.get(this.actionUrl, { headers: this.headers })
-            .map((response: Response) => <any>response.json())
-            .catch(this.handleError);
+        return this._http.get(this.actionUrl, { headers: this.headers }).pipe(
+            map((response: Response) => <any>response.json()),
+            catchError(this.handleError),);
     }
 
     deleteArchivo = (id: string): Observable<any> => {
         this.actionUrl = `${this._configuration.imageServerWithApiUrl}images/${id}`;
        
-        return this._http.delete(this.actionUrl, { headers: this.headers })
-            .map((response: Response) => <any[]>response.json())
-            .catch(this.handleError);
+        return this._http.delete(this.actionUrl, { headers: this.headers }).pipe(
+            map((response: Response) => <any[]>response.json()),
+            catchError(this.handleError),);
     }
 
     private handleError(error: Response) {
         console.error(error);
-        return Observable.throw(error.json().error || 'Server error');
+        return observableThrowError(error.json().error || 'Server error');
     }
 
 }

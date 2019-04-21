@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { LoginInterface } from './../pages/login/login.interface';
 import { LoginResponseInterface } from './../pages/login/login-response.interface';
 import { LocalStorageService } from 'angular-2-local-storage';
