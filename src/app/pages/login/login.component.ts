@@ -27,7 +27,7 @@ export class LoginComponent {
               private toastrService: ToastrService,
               private router: Router) {
 
-    let recordar = (localStorage.getItem('recordarSesion') === 'true') ? true : false;
+    const recordar = (localStorage.getItem('recordarSesion') === 'true') ? true : false;
 
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, EmailValidator.validate])],

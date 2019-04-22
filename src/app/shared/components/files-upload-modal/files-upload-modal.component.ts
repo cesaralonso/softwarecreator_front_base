@@ -22,7 +22,7 @@ export class FilesUploadModalComponent implements OnInit {
               private activeModal: BsModalService,
               private toastrService: ToastrService) {
   }
-
+  /*
   closeModal() {
     this.activeModal.hide(1);
   }
@@ -83,7 +83,7 @@ export class FilesUploadModalComponent implements OnInit {
     } else {
       this.toastrService.error(data.message);
     }
-  }
+  }*/
 
 
 }

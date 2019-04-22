@@ -58,8 +58,8 @@ export class AuthService {
 
     login(values: LoginInterface): Observable<any> {
         this.actionUrl = `${this._configuration.ServerWithApiUrl}si_user/login`;
-        const toAdd = JSON.stringify(values);
-        return this._http.post(this.actionUrl, toAdd, { headers: this.headers }).pipe(
+        // const toAdd = JSON.stringify(values);
+        return this._http.post(this.actionUrl, values, { headers: this.headers }).pipe(
             map((response: HttpResponse<any>) => <any>response),
             catchError(this.handleError),
             tap(response => {
@@ -71,11 +71,11 @@ export class AuthService {
                     //Módulos permitidos a usuario
                     let modules = [];
                     response.modules.forEach(element => {
-                        let path = '/pages/' + element.nombre.toLowerCase() + 's';
+                        const _path = '/pages/' + element.nombre.toLowerCase() + 's';
                         modules.push({
                             'nombre': element.nombre, 
                             'acceso': element.acceso, 
-                            'path': path, 
+                            'path': _path, 
                             'readable': element.readable, 
                             'writeable': element.writeable, 
                             'deleteable': element.deleteable, 

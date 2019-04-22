@@ -4,7 +4,7 @@ import {throwError as observableThrowError,  Observable } from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import { Configuration } from './../../../app.constants';
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from '@angular/http';
+/*import { Http, Response, Headers } from '@angular/http';*/
 
 
 
@@ -16,7 +16,7 @@ export class UploadModalService {
     private headers: Headers;
 
 
-    constructor(
+    /*constructor(
         private _http: Http, 
         private _configuration: Configuration ) {
         this.headers = new Headers();
@@ -35,7 +35,7 @@ export class UploadModalService {
     private handleError(error: Response) {
         console.error(error);
         return observableThrowError(error.json().error || 'Server error');
-    }
+    }*/
 
 }
 
