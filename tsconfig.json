@@ -1,33 +1,28 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "importHelpers": true,
-    "outDir": "./dist/out-tsc",
     "baseUrl": "src",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es6",
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "lib": [
       "es2018",
       "dom"
     ],
-    "types": [
-      "jquery",
-      "node"
-    ],
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-
     "plugins": [
       {
         "name": "tslint-language-service"
       }
-    ],
-    "module": "es2015"
+    ]
   },
   "angularCompilerOptions": {
     "preserveWhitespaces": "off",
