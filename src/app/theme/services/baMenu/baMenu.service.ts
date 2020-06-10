@@ -5,7 +5,9 @@ import * as _ from 'lodash';
 
 import { BehaviorSubject } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class BaMenuService {
   menuItems = new BehaviorSubject<any[]>([]);
   // Obtiene módulos de usuario
@@ -27,12 +29,12 @@ export class BaMenuService {
    * @param {Routes} routes Type compatible with app.menu.ts
    */
   updateMenuByRoutes(routes: Routes) {
-    let convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(routes));
+    const convertedRoutes = this.convertRoutesToMenus(_.cloneDeep(routes));
     this.menuItems.next(convertedRoutes);
   }
 
   convertRoutesToMenus(routes: Routes): any[] {
-    let items = this._convertArrayToItems(routes);
+    const items = this._convertArrayToItems(routes);
     return this._skipEmpty(items);
   }
 
@@ -41,10 +43,10 @@ export class BaMenuService {
   }
 
   selectMenuItem(menuItems: any[]): any[] {
-    let items = [];
+    const items = [];
     
     // Obtiene módulos con acceso
-    let auth_items = [];
+    const auth_items = [];
     this._menuItems.forEach((item) => {
       const nombre = `${item.nombre}s`;
       
@@ -73,7 +75,7 @@ export class BaMenuService {
   }
 
   protected _skipEmpty(items: any[]): any[] {
-    let menu = [];
+    const menu = [];
     items.forEach((item) => {
       let menuItem;
       if (item.skip) {
@@ -93,7 +95,7 @@ export class BaMenuService {
   }
 
   protected _convertArrayToItems(routes: any[], parent?: any): any[] {
-    let items = [];
+    const items = [];
     routes.forEach((route) => {
       items.push(this._convertObjectToItem(route, parent));
     });

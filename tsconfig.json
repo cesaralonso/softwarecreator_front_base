@@ -9,14 +9,19 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
+    "target": "es6",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "types": [
+      "jquery",
+      "node"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ],
-    "lib": [
-      "es2016",
-      "dom"
-    ],
+
     "plugins": [
       {
         "name": "tslint-language-service"
@@ -25,6 +30,8 @@
     "module": "es2015"
   },
   "angularCompilerOptions": {
-    "preserveWhitespaces": "off"
+    "preserveWhitespaces": "off",
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   }
 }
