@@ -57,7 +57,7 @@ export class AuthService {
     }
 
     login(values: LoginInterface): Observable<any> {
-        this.actionUrl = `${this._configuration.ServerWithApiUrl}si_user/login`;
+        this.actionUrl = `${this._configuration.apiUrl}si_user/login`;
         // const toAdd = JSON.stringify(values);
         return this._http.post(this.actionUrl, values, { headers: this.headers }).pipe(
             map((response: HttpResponse<any>) => <any>response),
