@@ -68,8 +68,8 @@ export class AuthService {
                 this.recordarSesion = values.recordarSesion;
                 localStorage.setItem('recordarSesion', values.recordarSesion.toString());
                 if (response.success) {
-                    //Módulos permitidos a usuario
-                    let modules = [];
+                    // Módulos permitidos a usuario
+                    const modules = [];
                     response.modules.forEach(element => {
                         const _path = '/pages/' + element.nombre.toLowerCase() + 's';
                         modules.push({
@@ -107,7 +107,7 @@ export class AuthService {
                 } else {
                     this.toastrService.error(response.message);
                 }
-            }),);
+            }));
     }
 
     logout(): void {
