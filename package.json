@@ -29,7 +29,10 @@
     "clean:dist": "npm run rimraf -- dist",
     "clean:coverage": "npm run rimraf -- coverage",
     "docs:deploy": "wintersmith build -C docs && gh-pages -d docs/build",
-    "docs:serve": "wintersmith preview -C docs"
+    "docs:serve": "wintersmith preview -C docs",
+    "sw-build": "ng build --prod && node build/fix-sw",
+    "sw-serve": "npm run sw-build && http-server dist -p 8080 -o",
+    "ci-deploy": "ng build --prod --base-href \"https://acopiosroquin.com/\" && node fix-sw"
   },
   "private": true,
   "dependencies": {
