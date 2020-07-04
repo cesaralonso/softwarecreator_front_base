@@ -32,7 +32,7 @@
     "docs:serve": "wintersmith preview -C docs",
     "sw-build": "ng build --prod && node build/fix-sw",
     "sw-serve": "npm run sw-build && http-server dist -p 8080 -o",
-    "ci-deploy": "ng build --prod --base-href \"https://acopiosroquin.com/\" && node fix-sw"
+    "ci-deploy": "ng build --prod --base-href \"https://domain.com/\" && node fix-sw"
   },
   "private": true,
   "dependencies": {
