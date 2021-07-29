@@ -4,6 +4,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgxUploaderModule } from 'ngx-uploader';
 import { AppTranslationModule } from '../app.translation.module';
+import { SocketIOService } from '../shared/services/socketio.service';
+
 
 import {
   BaThemeConfig
@@ -88,7 +90,8 @@ const NGA_SERVICES = [
   BaImageLoaderService,
   BaThemePreloader,
   BaThemeSpinner,
-  BaMenuService
+  BaMenuService,
+  SocketIOService
 ];
 
 const NGA_VALIDATORS = [

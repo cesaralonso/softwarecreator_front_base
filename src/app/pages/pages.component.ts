@@ -16,10 +16,10 @@ import { PAGES_MENU } from './pages.menu';
       </div>
     </div>
     <footer class="al-footer clearfix">
-      <div class="al-footer-right" translate>PROJECTNAME</div>
+      <div class="al-footer-right">PROJECTNAME</div>
       <div class="al-footer-main clearfix">
-        <div class="al-copy">&copy; Software Insights 2018</div>
         <ul class="al-share clearfix">
+        <div class="al-copy">&copy; <a href="https://www.softwareinsights.com.mx" target="_blank">Software Insights 2020/2021</a></div>
           <li></li>
         </ul>
       </div>

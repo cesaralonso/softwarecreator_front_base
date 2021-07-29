@@ -32,7 +32,9 @@
     "docs:serve": "wintersmith preview -C docs",
     "sw-build": "ng build --prod && node build/fix-sw",
     "sw-serve": "npm run sw-build && http-server dist -p 8080 -o",
-    "ci-deploy": "ng build --prod --base-href \"https://domain.com/\" && node fix-sw"
+    "fix-memory-limit": "cross-env LIMIT=2048 increase-memory-limit",
+    "ci-deploy-fix": "ng build --prod --base-href \"https://plataforma-x.com/\" --output-hashing none && npm run fix-memory-limit && node fix-sw",
+    "ci-deploy": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --base-href \"https://plataforma-x.com/\" --output-hashing none && node fix-sw"
   },
   "private": true,
   "dependencies": {
@@ -86,7 +88,14 @@
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",
     "tslib": "^1.9.0",
-    "zone.js": "0.8.29"
+    "zone.js": "0.8.29",
+    "ngx-mask": "^9.1.2",
+    "@agm/core": "1.0.0",
+    "dexie": "^3.0.1",
+    "moment": "^2.27.0",
+    "socket.io": "~2.2.0",
+    "socket.io-client": "~2.2.0",
+    "sockjs-client": "^1.1.4",
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
@@ -117,8 +126,6 @@
     "tslint-language-service": "^0.9.9",
     "typogr": "0.6.6",
     "underscore": "1.8.3",
-    "wintersmith": "2.2.5",
-    "typescript": "^3.2.4",
-    "wintersmith-sassy": "1.1.0"
+    "typescript": "^3.2.4"
   }
 }

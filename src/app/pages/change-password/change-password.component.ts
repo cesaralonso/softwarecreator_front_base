@@ -1,17 +1,12 @@
-import { ChangePasswordResponseInterface } from './change-password-response.interface';
 import { LoginResponseInterface } from './../login/login-response.interface';
 import { LoginInterface } from './../login/login.interface';
 import { AuthService } from './../../shared/auth.service';
 import { Router } from '@angular/router';
-import { LocalStorageService } from 'angular-2-local-storage';
 import { ToastrService } from 'ngx-toastr';
 import { ChangePasswordService } from './change-password.service';
-import { Http } from '@angular/http';
-import { Configuration } from './../../app.constants';
 import { Component } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { EqualPasswordsValidator } from '../../theme/validators';
-import { ChangePasswordInterface } from './change-password.interface';
 
 
 @Component({
@@ -33,15 +28,11 @@ export class ChangePasswordComponent {
   private iduser: string;
   private email: string;
   
-
   constructor(fb: FormBuilder,
-    private http: Http, 
-    private configuration: Configuration, 
     private authService: AuthService,
     private service: ChangePasswordService,
     private toastrService: ToastrService,
     private router: Router,
-    private localStorageService: LocalStorageService,
     ) {
 
     this.iduser = localStorage.getItem('iduser');

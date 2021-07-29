@@ -1,3 +1,4 @@
+import { AuthService } from './../../shared/auth.service';
 import {Component} from '@angular/core';
 import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
 
@@ -7,13 +8,13 @@ import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/form
   styleUrls: ['./forgot.scss']
 })
 export class Forgot {
-
   public form:FormGroup;
   public email:AbstractControl;
   public password:AbstractControl;
   public submitted:boolean = false;
 
-  constructor(fb:FormBuilder) {
+  constructor(fb:FormBuilder,
+    private authService: AuthService) {
     this.form = fb.group({
       'email': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
     });
@@ -24,8 +25,11 @@ export class Forgot {
   public onSubmit(values:Object):void {
     this.submitted = true;
     if (this.form.valid) {
-      // your code goes here
-      // console.log(values);
+      this.authService.forgotPassword(this.form.controls['email'].value)
+        .subscribe(response => {
+
+          console.log('onSubmit Forgot response', response);
+        });
     }
   }
 }

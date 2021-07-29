@@ -21,7 +21,8 @@ export class OnlineOfflineService {
   }
 
   private updateOnlineStatus() {
-    console.log('this.internalConnectionChanged.next', window.navigator.onLine);
     this.internalConnectionChanged.next(window.navigator.onLine);
   }
+
+
 }

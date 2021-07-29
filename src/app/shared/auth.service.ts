@@ -1,34 +1,22 @@
-
-import {throwError as observableThrowError, Observable, throwError } from 'rxjs';
-
-import {tap, catchError, map} from 'rxjs/operators';
+import { throwError as observableThrowError, Observable, throwError, Subject } from 'rxjs';
+import { tap, catchError, map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-
-
-
 import { Configuration } from './../app.constants';
 import { LoginInterface } from './../pages/login/login.interface';
-import { LoginResponseInterface } from './../pages/login/login-response.interface';
 import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 @Injectable()
 export class AuthService {
+    private internalAuthChanged = new Subject<boolean>();
     
     token: string;
     user_modules: any[];
     isLoggedIn: boolean = false;
     recordarSesion: boolean = false;
-
-    loggedIn() {
-        return this.jwtHelper.isTokenExpired();
-    }
-
-    toBoolean(object: any): boolean {
-        return (object.toString() === 'true') ? true : false;
-    }
 
     // store the URL so we can redirect after logging in
     redirectUrl: string;
@@ -56,6 +44,23 @@ export class AuthService {
         }
     }
 
+    get authChanged() {
+        return this.internalAuthChanged.asObservable();
+    }
+
+    private updateAuthStatus(logged: boolean) {
+        this.internalAuthChanged.next(logged);
+    }
+
+    loggedIn() {
+        this.isLoggedIn = this.token !== null && !this.jwtHelper.isTokenExpired(this.token);
+        return this.isLoggedIn;
+    }
+
+    toBoolean(object: any): boolean {
+        return (object.toString() === 'true') ? true : false;
+    }
+
     login(values: LoginInterface): Observable<any> {
         this.actionUrl = `${this._configuration.apiUrl}si_user/login`;
         // const toAdd = JSON.stringify(values);
@@ -63,36 +68,29 @@ export class AuthService {
             map((response: HttpResponse<any>) => <any>response),
             catchError(this.handleError),
             tap(response => {
-                this.isLoggedIn = true;
-                this.token = response.token;
-                this.recordarSesion = values.recordarSesion;
-                localStorage.setItem('recordarSesion', values.recordarSesion.toString());
+
                 if (response.success) {
+
+                    this.isLoggedIn = true;
+                    this.updateAuthStatus(true);
+
+                    this.token = response.token;
+                    this.recordarSesion = values.recordarSesion;
+                    localStorage.setItem('recordarSesion', values.recordarSesion.toString());
+                    
                     // Módulos permitidos a usuario
-                    const modules = [];
                     response.modules.forEach(element => {
                         const _path = '/pages/' + element.nombre.toLowerCase() + 's';
-                        modules.push({
-                            'nombre': element.nombre, 
-                            'acceso': element.acceso, 
-                            'path': _path, 
-                            'readable': element.readable, 
-                            'writeable': element.writeable, 
-                            'deleteable': element.deleteable, 
-                            'updateable': element.updateable, 
-                            'read_own': element.read_own, 
-                            'write_own': element.write_own, 
-                            'delete_own': element.delete_own, 
-                            'update_own': element.update_own
-                        });
+                        element.path = _path;
                     });
-                    this.user_modules = modules;
+                    this.user_modules = response.modules;
                     
                     // IMPLEMENTADO PARA CHANGE-PASSWORD
                     localStorage.setItem('iduser', response.iduser);
                     localStorage.setItem('email', response.email);
-
+                    localStorage.setItem('idrol', response.idrol);
                     localStorage.setItem('token', response.token);
+
                     if (values.recordarSesion) {
                         localStorage.setItem('isLoggedIn', 'true');
                         localStorage.setItem('user_modules', JSON.stringify(modules));
@@ -102,7 +100,7 @@ export class AuthService {
                     if (this.redirectUrl !== undefined) {
                         this.router.navigateByUrl(this.redirectUrl);
                     } else {
-                        this.router.navigate(['pages/dashboard']);
+                        this.navigateToFirstModule();
                     }
                 } else {
                     this.toastrService.error(response.message);
@@ -110,18 +108,50 @@ export class AuthService {
             }));
     }
 
-    logout(): void {
-        this.isLoggedIn = false;
-        this.user_modules = [];
-        if (this.recordarSesion) {
-            localStorage.removeItem('isLoggedIn');
-            localStorage.removeItem('token');
-            localStorage.removeItem('user_modules');
-            localStorage.removeItem('recordarSesion');
-        }
-        if (!this.isLoggedIn) {
-            this.toastrService.success('Has cerrado sesión correctamente');
-        }
+
+    navigateToFirstModule() {
+        this.router.navigate(['pages/dashboard']);
+        /*if (this.stateService.state.user.iduser === 1) {
+            this.router.navigate(['pages/proyectos']);
+        } else {
+            const navigate = this.user_modules.filter(o => o.acceso)[0].path;
+            this.router.navigate([navigate]);
+        }*/
+    }
+
+    logout(): Observable<any> {
+
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': 'JWT ' + this.token
+            })};
+
+        return this._http.post(`${this._configuration.apiUrl}app/cerrar-sesion`, {}, options).pipe(
+            map((response: HttpResponse<any>) => <any>response),
+            catchError(this.handleError),
+            tap((response: any) => { 
+                if (response.success) {
+                    this.toastrService.success('Has cerrado la sesión, por favor vuelva a logearse.');
+
+                    this.token = '';
+                    this.isLoggedIn = false;
+                    this.user_modules = [];
+
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('user_modules');
+                    localStorage.removeItem('recordarSesion');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('email');
+                    localStorage.removeItem('iduser');
+                    localStorage.removeItem('idrol');
+                   
+                    this.router.navigate(['/login']);
+                } else {
+                    this.toastrService.error('La sesión no se cerró correctamente.');
+                }
+             }));
+
     }
 
     useJwtHelper() {
@@ -132,9 +162,6 @@ export class AuthService {
             return false;
         }
     }
-
-
-
         
     getUserModules() {
         if (this.user_modules) {
@@ -164,14 +191,44 @@ export class AuthService {
             return false;
         }
     }
-    
+
     modulePermission(module_path: string) {
-        const modules = this.getUserModulesPaths();
-        if (modules.indexOf(module_path) >= 0) {
-            return true;
+        // una url puede ser como /pages/cadenapruebaestados/cliente/9/proyecto/ABC y todas las paths de modulos son como /pages/cadenapruebaestados...
+        // partir para comparar con dos primeras partes
+        if (module_path.indexOf('/') !== -1) {
+            const urlSplited = module_path.split('/');
+            const pathToCompare = `/${urlSplited[1]}/${urlSplited[2]}`;
+            const modules = this.getUserModulesPaths();
+            if (modules.indexOf(pathToCompare) !== -1) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
+            // No es una url válida
             return false;
         }
+    }
+
+    forgotPassword(email: string): Observable<any> {
+
+        const options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Authorization': 'JWT ' + this.token
+            })};
+
+        return this._http.post(`${this._configuration.apiUrl}si_user/forgot`, {email: email}, options).pipe(
+            map((response: HttpResponse<any>) => <any>response),
+            catchError(this.handleError),
+            tap((response: any) => { 
+                if (response.success) {
+                    this.toastrService.success('Revisa tu correo para continuar el proceso.');
+                    this.router.navigate(['/login']);
+                } else {
+                    this.toastrService.error('Ocurrió algún problema con el procedimiento, vuelve a intentarlo por favor.');
+                }
+             }));
     }
 
     private handleError(error: any) {
