@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Verificación de cuenta de usuario | Iberoil Plataforma Clientes</title>
+  <title>Verificación de cuenta de usuario |  Plataforma Clientes</title>
   <link rel="manifest" href="manifest.json">
 
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon180X180.png">
@@ -56,7 +56,7 @@
       <div class="auth-block text-center">
         <div class="text-center m-5">
           <picture>
-            <source media="min-width: 320px" srcset="./assets/img/iberoil-logo.png"><img alt="Logo Iberoil" src="./assets/img/iberoil-logo.png" width="200">
+            <source media="min-width: 320px" srcset="./assets/img/logo.png"><img alt="Logo " src="./assets/img/logo.png" width="200">
           </picture>
         </div>
 
@@ -69,13 +69,13 @@
           } else {
 
             $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://plataforma-iberoil.com/api/si_user/verificar/$email/$code");
+            curl_setopt($ch, CURLOPT_URL, "https://plataforma-x.com/api/si_user/verificar/$email/$code");
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $res = JSON_DECODE(curl_exec($ch));
 
             if ($res->success && $res->result[0]->exist) {
               echo "<p><strong>¡Tu cuenta ha sido verificada!.</strong></p>";
-              echo "<p>Ahora puedes <a href='index.html'><strong>Ingresar a Iberoil Portal Clientes</strong></a></p>";
+              echo "<p>Ahora puedes <a href='index.html'><strong>Ingresar a  Portal Clientes</strong></a></p>";
             } else {
               echo "<p><strong>Error: Tu enlace se ha caducado o es incorrecto, por favor solicita uno nuevo.</strong></p>";
             }
