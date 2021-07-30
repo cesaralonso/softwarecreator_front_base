@@ -46,9 +46,9 @@ export class BaPageTop {
     }
   }
 
-  /* buscar(idproyecto: string, event) {
+  /* buscar(id: string, event) {
     event.preventDefault();
-      this.router.navigate([`/pages/${idproyecto}`]);
+      this.router.navigate([`/pages/${id}`]);
   } */
 
   toggleMenu() {
