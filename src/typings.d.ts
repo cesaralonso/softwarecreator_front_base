@@ -41,10 +41,4 @@ interface NodeModule {
 interface JQuery {
   easyPieChart;
 }
-
-declare var GoogleMapsLoader:any;
-declare var L:any;
-declare var AmCharts:any;
-declare var Chart:any;
-declare var Chartist:any;
-declare const chroma: any;
+declare const Capacitor: any;

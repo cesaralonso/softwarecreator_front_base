@@ -22,7 +22,8 @@
         "name": "tslint-language-service"
       }
     ],
-    "module": "es2015"
+    "module": "es2015",
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "preserveWhitespaces": "off"
