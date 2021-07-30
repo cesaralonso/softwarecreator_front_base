@@ -1,8 +1,7 @@
-import { Configuration } from './../app.constants';
-import { AuthService } from './auth.service';
+import { Configuration } from './../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { SwPush } from '@angular/service-worker';
 
 
@@ -11,8 +10,7 @@ export class PushNotificationService {
 
   constructor(private http: HttpClient,
               private swPush: SwPush,
-              private configuration: Configuration,
-              private authService: AuthService) {
+              private configuration: Configuration) {
   }
 
   addPushSubscriber(iduser: number, idrol: number) {

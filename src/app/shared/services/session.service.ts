@@ -1,16 +1,14 @@
-import { AuthService } from './../auth.service';
+import { AuthService } from './auth.service';
 import { throwError as observableThrowError, Observable } from 'rxjs';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Configuration } from '../../app.constants';
+import { Configuration } from './../../app.constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
-    private actionUrl: string;
-    private headers: HttpHeaders;
     private options: any;
     private endPoint: string;
     constructor(

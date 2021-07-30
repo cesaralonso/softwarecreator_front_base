@@ -2,7 +2,7 @@ import { Routes, RouterModule, CanActivate } from '@angular/router';
 import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
 
-import { AuthGuard } from '../shared/auth-guard.service';
+import { AuthGuard } from '../shared/services/auth-guard.service';
 
 // noinspection TypeScriptValidateTypes
 

@@ -1,7 +1,29 @@
+<ba-card cardTitle="Filtro">
+  <div class="row">
+    <div class="col-md-2">
+      Semana: 
+      <select multiple [(ngModel)]="semana" class="form-control">
+        <option [selected]="semana === item" value="{{item}}" *ngFor="let item of _semana">{{item}}</option>
+      </select>
+    </div>
+    <div class="col-md-4 text-left">
+      <br>
+      <button [disabled]='!semana' class='btn btn-sm btn-info' (click)='filtrar()' >Mostrar datos por semana(s)</button>
+    </div>
+  </div>
+</ba-card>
+
+<h1>Toneladas disponibles / Semana</h1>
 <div class="row">
-  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-
-
+  <div class="col-md-6">
+    <ba-card cardTitle="Gráfica 1" baCardClass="">
+      <app-chart-barras [data]="[semanaGranaje, semana, 'bar']" *ngIf="semanaGranaje && semanaGranaje.length > 0"></app-chart-barras>
+    </ba-card>
+  </div>
+  <div class="col-md-6">
+    <ba-card cardTitle="Gráfica 2" baCardClass="">
+      <app-chart-barras [data]="[semanaFruta, semana, 'bar']" *ngIf="semanaFruta && semanaFruta.length > 0"></app-chart-barras>
+    </ba-card>
   </div>
 </div>
 

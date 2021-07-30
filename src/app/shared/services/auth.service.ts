@@ -4,9 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Configuration } from './../app.constants';
-import { LoginInterface } from './../pages/login/login.interface';
+import { Configuration } from './../../app.constants';
+import { LoginInterface } from './../../pages/login/login.interface';
 import { JwtHelperService } from '@auth0/angular-jwt';
+
 
 
 @Injectable()

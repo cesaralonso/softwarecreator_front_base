@@ -1,7 +1,7 @@
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { AuthLocalstorage } from './shared/auth-localstorage.service';
 import { AuthService } from './shared/auth.service';
-import { AuthGuard } from './shared/auth-guard.service';
+import { AuthGuard } from './shared/services/auth-guard.service';
 import { NgModule, ApplicationRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SaLoadingScreenService } from '../components/sa-loading-screen/sa-loading-screen.service';
+import { SaLoadingScreenService } from './../components/sa-loading-screen/sa-loading-screen.service';
 import { finalize } from 'rxjs/operators';
 
 

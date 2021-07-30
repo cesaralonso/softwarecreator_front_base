@@ -1,57 +1,29 @@
-<ul class="al-msg-center clearfix">
+<ul class="al-msg-center clearfix" *ngIf="user.super">
   <li class="dropdown">
-    <a href class="dropdown-toggle" id="msg-dd1" data-toggle="dropdown" aria-expanded="false">
-      <i class="fa fa-bell-o"></i><span>{{ notifications.length }}</span>
-
-      <div class="notification-ring"></div>
-    </a>
-
-    <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd1">
-      <i class="dropdown-arr"></i>
-
-      <div class="header clearfix">
-        <strong>Notificaciones</strong>
-        <a href>Marcar todos</a>
-        <a href>Configuración</a>
-      </div>
-      <div class="msg-list">
-        <a *ngFor="let msg of notifications" href class="clearfix">
-          <div class="img-area"><img [ngClass]="{'photo-msg-item': !msg.image}"
-                                     src="{{ ( msg.image ||  (msg.name | baProfilePicture)) }}"></div>
-          <div class="msg-area">
-            <div>{{ msg.text }}</div>
-            <span>{{ msg.time }}</span>
-          </div>
-        </a>
-      </div>
-      <a href>Ver todas las notificaciones</a>
-    </div>
-  </li>
-  <!--
-  <li class="dropdown">
-    <a href class="msg dropdown-toggle" id="msg-dd2" data-toggle="dropdown" aria-expanded="false">
-      <i class="fa fa-envelope-o"></i><span>{{ messages.length }}</span>
-      <div class="notification-ring"></div>
-    </a>
-    <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd2">
-      <i class="dropdown-arr"></i>
-      <div class="header clearfix">
-        <strong>Messages</strong>
-        <a href>Mark All as Read</a>
-        <a href>Settings</a>
-      </div>
-      <div class="msg-list">
-        <a *ngFor="let msg of messages" href class="clearfix">
-          <div class="img-area"><img [ngClass]="{'photo-msg-item': !msg.image}"
-                                     src="{{ ( msg.image ||  (msg.name | baProfilePicture)) }}"></div>
-          <div class="msg-area">
-            <div>{{ msg.text }}</div>
-            <span>{{ msg.time }}</span>
-          </div>
-        </a>
-      </div>
-      <a href>Ver todos los mensajes</a>
-    </div>
-  </li>
-  -->
-</ul>
+     <a href class="dropdown-toggle" id="msg-dd1" data-toggle="dropdown" aria-expanded="false">
+       <i class="fa fa-bell-o"></i><span id="totalNoLeidas">{{ totalNoLeidas }}</span>
+       <div class="notification-ring"></div>
+     </a>
+     <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd1" *ngIf="messages.length">
+       <i class="dropdown-arr"></i>
+       <div class="header clearfix">
+         <strong>Notificaciones</strong>
+         <a ng-href="" (click)="marcarComoLeidas()">Marcar todas como leidas</a>
+       </div>
+       <div class="msg-list" id="alertas">
+         <a [routerLink]="['/pages/visitas/', message.insertId]"  
+         *ngFor="let message of messages" 
+         class="clearfix">
+           <div class="img-area">
+             {{ message.remitente }}
+           </div>
+           <div class="msg-area">
+             <div class="text-success">{{ message.mensaje }}</div>
+             <span>{{ message.date }} {{ message.hour }}</span>
+           </div>
+         </a>
+       </div>
+     </div>
+   </li>
+ </ul>
+ 

@@ -92,6 +92,7 @@ export class App {
         .catch(error => {
           this.toastrService.error('router error: ' + JSON.stringify(error));
         });
+      this.showToast('Acceso denegado, debes logearte para utilizar el servicio.');
     }
   }
 

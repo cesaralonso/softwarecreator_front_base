@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import * as moment from 'moment-timezone';
 
 
 @Injectable()
@@ -22,6 +22,21 @@ export class CommonService {
             let j;
             j = (j = i.length) > 3 ? j % 3 : 0;
         return "$ " + s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(cantidad - +i).toFixed(c).slice(2) : "");
+    }
+
+    // Función para convertir un JSON en JSON STRING
+    JSONToJSON(json, reportTitle) {
+        json = JSON.stringify(json)
+        reportTitle = reportTitle.replace(/ /g,'_');
+        
+        const uri = `data:text/json;charset=utf-8,${encodeURIComponent(json)}`;
+        const link = document.createElement('a');
+        // link.style = 'visibility:hidden';
+        link.href = uri;
+        link.download = reportTitle + '.json';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     // Función para convertir un JSON en CSV
@@ -63,7 +78,7 @@ export class CommonService {
             return;
         }
 
-        let fileName = 'Iberoil ';
+        let fileName = '';
         fileName += reportTitle.replace(/ /g,' ');
         const universalBOM = '\uFEFF';
         const uri = `data:text/csv;charset=utf-8,${encodeURIComponent(universalBOM + csv)}`;
@@ -97,6 +112,29 @@ export class CommonService {
         return datehour;
     }
 
+    // Obtiene la hora y fecha actual
+    getCurrentDateAndHour(): any {
+        const date = new Date();
+        const year = date.getFullYear();
+        let month = (date.getMonth() + 1).toString();
+        month = ((+month < 10) ? '0' : '') + month;
+        let day = date.getDate().toString();
+        day = ((+day < 10) ? '0' : '') + day;
+        let hours = date.getHours().toString();
+        hours = ((+hours < 10) ? '0' : '') + hours;
+        let minutes = date.getMinutes().toString();
+        minutes = ((+minutes < 10) ? '0' : '') + minutes;
+
+        const now = `${year}-${month}-${day}`;
+        const hour = `${hours}:${minutes}`;
+
+        const datehour = {
+            fecha: now,
+            hora: hour
+        };
+        return datehour;
+    }
+
     // Devuelve fecha tipo new Date() con formato yy-mm-dd
     formatDate(fecha): string {
 
@@ -115,4 +153,36 @@ export class CommonService {
         return `${year}-${month}-${day}`;
     }
 
+    formatStringDate(fecha: string): string {
+        const dia = fecha.split('-')[0];
+        const mes = fecha.split('-')[1];
+        const ano = fecha.split('-')[2];
+        return `${ano}-${mes}-${dia}`;
+    }
+
+    getCurrentMonth(): any {
+        const date = new Date();
+        const year = date.getFullYear();
+        let month = (date.getMonth() + 1).toString();
+        month = ((+month < 10) ? '0' : '') + month;
+
+        const now = `${year}-${month}-01`;
+
+        return now;
+    }
+
+    getMomentDateTime(): any {
+        const date = moment(new Date()).tz('America/Mexico_City').format('YYYY-MM-DD HH:mm:ss'); 
+        return date;
+    }
+
+    getMomentDate(): any {
+        const date = moment(new Date()).tz('America/Mexico_City').format('YYYY-MM-DD'); 
+        return date;
+    }
+    
+    getMomentTime(): any {
+        const date = moment(new Date()).tz('America/Mexico_City').format('HH:mm:ss'); 
+        return date;
+    }
 }
