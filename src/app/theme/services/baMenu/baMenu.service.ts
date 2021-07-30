@@ -1,4 +1,4 @@
-import { AuthService } from './../../../shared/auth.service';
+import { AuthService } from './../../../shared/services/auth.service';
 import { Injectable } from '@angular/core';
 import { Router, Routes } from '@angular/router';
 import * as _ from 'lodash';

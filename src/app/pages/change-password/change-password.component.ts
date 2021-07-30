@@ -1,6 +1,6 @@
 import { LoginResponseInterface } from './../login/login-response.interface';
 import { LoginInterface } from './../login/login.interface';
-import { AuthService } from './../../shared/auth.service';
+import { AuthService } from './../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ChangePasswordService } from './change-password.service';

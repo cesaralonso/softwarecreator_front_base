@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { PushNotificationService } from './shared/push-notifications.service';
+import { PushNotificationService } from './shared/services/push-notifications.service';
 import { SwUpdate } from '@angular/service-worker';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthService } from './shared/auth.service';
+import { AuthService } from './shared/services/auth.service';
 import { GlobalState } from './global.state';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './theme/services';
 import { BaThemeConfig } from './theme/theme.config';

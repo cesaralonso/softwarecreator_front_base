@@ -3,7 +3,7 @@ import { throwError as observableThrowError, Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoginResponseInterface } from './../login/login-response.interface';
 import { LoginInterface } from './../login/login.interface';
-import { AuthService } from './../../shared/auth.service';
+import { AuthService } from './../../shared/services/auth.service';
 import { Configuration } from './../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';

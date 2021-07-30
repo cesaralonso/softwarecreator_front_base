@@ -94,7 +94,7 @@ export class AuthService {
 
                     if (values.recordarSesion) {
                         localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('user_modules', JSON.stringify(modules));
+                        localStorage.setItem('user_modules', JSON.stringify(this.user_modules));
                     }
                     this.toastrService.success(response.message);
                     // Regresa a página anterior si viene de otra página o a dashboard
