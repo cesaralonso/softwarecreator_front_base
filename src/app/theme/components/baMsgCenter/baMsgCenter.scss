@@ -147,7 +147,8 @@
       }
       .img-area {
         float: left;
-        width: 36px;
+        /* width: 135px; */
+        width: 150px;
         img {
           width: 36px;
           height: 36px;
@@ -175,7 +176,7 @@
       }
       .msg-area {
         float: right;
-        width: 230px;
+        /* width: 150px; */
         div {
           max-height: 34px;
           overflow: hidden;
