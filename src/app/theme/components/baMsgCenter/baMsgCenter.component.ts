@@ -59,7 +59,7 @@ export class BaMsgCenter implements OnInit {
   }
 
   onMessage(message: Message) {
-      console.log('message', message);
+      console.log('onMessage message', message);
 
       if ( message.from.idsi_user !== undefined ) {
           console.log("message.from.idsi_user", message.from.idsi_user);
@@ -74,10 +74,10 @@ export class BaMsgCenter implements OnInit {
 
       const _message = {
         remitente: message.from.usuario || message.from.email.split('@')[0],
-        mensaje: message.content.category === 'VISITA-CREADA-ONLINE' 
-          ? 'Nueva visita Online' 
-          : 'Nueva visita Offline',
-        insertId: message.content.insertId,
+        mensaje: message.content.category === 'REGISTRO-CREADO-ONLINE' 
+          ? 'Nuevo Registro Online' 
+          : 'Nuevo Registro Offline',
+        insertId: message.content.result.insertId,
         date: message.date,
         hour: message.hour
       };
@@ -86,7 +86,7 @@ export class BaMsgCenter implements OnInit {
   }
 
   onTracking(message: Message) {
-    console.log('message tracking', message);
+    console.log('onTracking message', message);
 
     if ( message.from.idsi_user !== undefined ) {
         console.log("message.from.idsi_user", message.from.idsi_user);

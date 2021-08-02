@@ -11,9 +11,7 @@
          <a ng-href="" (click)="marcarComoLeidas()">Marcar todas como leidas</a>
        </div>
        <div class="msg-list" id="alertas">
-         <a [routerLink]="['/pages/visitas/', message.insertId]"  
-         *ngFor="let message of messages" 
-         class="clearfix">
+         <a *ngFor="let message of messages" class="clearfix"><!-- [routerLink]="['/pages/modulo/', message.insertId]"   -->
            <div class="img-area">
              {{ message.remitente }}
            </div>
