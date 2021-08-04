@@ -126,6 +126,7 @@
     "tslint-language-service": "^0.9.9",
     "typogr": "0.6.6",
     "underscore": "1.8.3",
-    "typescript": "^3.2.4"
+    "typescript": "^3.2.4",
+    "replace-in-file": "^6.1.0"
   }
 }
