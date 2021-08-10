@@ -1,33 +1,31 @@
-import { LiquidacionsInterface } from './../liquidacions/components/liquidacions-table/liquidacions.interface';
-/* import { LiquidacionsService } from './../liquidacions/components/liquidacions-table/liquidacions.service'; */
-import { VehiculosAddModalComponent } from './../vehiculos/components/vehiculos-table/vehiculos-add-modal/vehiculos-add-modal.component';
-import { VehiculosInterface } from './../vehiculos/components/vehiculos-table/vehiculos.interface';
-import { AlumnosInterface } from './../alumnos-table/alumnos.interface';
-import { AlumnosResponseInterface } from './../alumnos-table/alumnos-response.interface';
+import { Si_liquidacionsInterface } from './../si_liquidacions/components/si_liquidacions-table/si_liquidacions.interface';
+/* import { LiquidacionsService } from './../si_liquidacions/components/si_liquidacions-table/si_liquidacions.service'; */
+import { Si_clientesInterface } from './../si_clientes/components/si_clientes-table/si_clientes.interface';
+import { Si_clientesResponseInterface } from './../si_clientes/components/si_clientes-table/si_clientes-response.interface';
+import { Si_clientesService } from './../si_clientes/components/si_clientes-table/si_clientes.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from './../../shared/auth.service';
+import { AuthService } from './../../shared/services/auth.service';
 import { DialogService } from 'ng2-bootstrap-modal';
 import { ToastrService } from 'ngx-toastr';
-import { AlumnosService } from './../alumnos-table/alumnos.service';
-import { FacturacionsInterface } from './../facturacions/components/facturacions-table/facturacions.interface';
-import { FacturacionsAddModalComponent } from './../facturacions/components/facturacions-table/facturacions-add-modal/facturacions-add-modal.component';
-import { SugerenciasInterface } from './../sugerencias/components/sugerencias-table/sugerencias.interface';
-import { SugerenciasAddModalComponent } from './../sugerencias/components/sugerencias-table/sugerencias-add-modal/sugerencias-add-modal.component';
-import { CommonService } from '../../shared/common.service';
+import { Si_facturacionsInterface } from './../si_facturacions/components/si_facturacions-table/si_facturacions.interface';
+import { Si_facturacionsAddModalComponent } from './../si_facturacions/components/si_facturacions-table/si_facturacions-add-modal/si_facturacions-add-modal.component';
+import { Si_sugerenciasInterface } from './../si_sugerencias/components/si_sugerencias-table/si_sugerencias.interface';
+import { Si_sugerenciasAddModalComponent } from './../si_sugerencias/components/si_sugerencias-table/si_sugerencias-add-modal/si_sugerencias-add-modal.component';
+import { CommonService } from '../../shared/services/common.service';
 
 
 @Component({
-  selector: 'alumnos-profile',
-  templateUrl: './alumnos-profile.component.html',
-  styleUrls: ['./alumnos-profile.component.scss']
+  selector: 'clientes-profile',
+  templateUrl: './clientes-profile.component.html',
+  styleUrls: ['./clientes-profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
     item: any;
-    idalumno: number;
+    idsi_cliente: number;
 
-  _liquidacion: LiquidacionsInterface[] = [];
-  _liquidacion_filtered: LiquidacionsInterface[] = [];
+  _liquidacion: Si_liquidacionsInterface[] = [];
+  _liquidacion_filtered: Si_liquidacionsInterface[] = [];
 
     // Permisos en vista
     updateable = false;
@@ -40,7 +38,7 @@ export class ProfileComponent implements OnInit {
     mesActual: string;
 
     constructor(
-      private service: AlumnosService, 
+      private service: Si_clientesService, 
       private toastrService: ToastrService, 
       private dialogService: DialogService, 
       private authService: AuthService, 
@@ -59,7 +57,7 @@ export class ProfileComponent implements OnInit {
         const userModules = this.authService.getUserModules();
         if (userModules[0]) {
           for (const element in userModules) {
-            if (userModules[element].path === '/pages/alumnos') {
+            if (userModules[element].path === '/pages/si_clientes') {
               this.updateable = userModules[element].updateable;
               this.deleteable = userModules[element].deleteable;
               this.writeable = userModules[element].writeable;
@@ -76,9 +74,9 @@ export class ProfileComponent implements OnInit {
     }
     refill() { 
       this.route.params.subscribe(params => {
-        if (params['idalumno'] !== undefined) {
-          this.idalumno = +params['idalumno'];
-          this.findByIdResidente(this.idalumno);
+        if (params['idsi_cliente'] !== undefined) {
+          this.idsi_cliente = +params['idsi_cliente'];
+          this.findByIdResidente(this.idsi_cliente);
         }
       });
     }
@@ -86,9 +84,9 @@ export class ProfileComponent implements OnInit {
       this.service
         .findById(id)
         .subscribe(
-            (data: AlumnosResponseInterface) => {
+            (data: Si_clientesResponseInterface) => {
                 if (data.success) {
-                  data.result.cursos.map(vivienda => vivienda.liquidaciones = data.result.liquidaciones.filter(liquidacion => liquidacion.numero === vivienda.numero));
+                  data.result.servicios.map(vivienda => vivienda.liquidaciones = data.result.liquidaciones.filter(liquidacion => liquidacion.numero === vivienda.numero));
                   this.item = data.result;
                   console.log(this.item);
                 } else {
@@ -99,33 +97,30 @@ export class ProfileComponent implements OnInit {
             () => console.log('Get all Items complete'))
     }
     
-    viewPersona(alumnos: AlumnosInterface, contacto?: boolean) {
+    viewPersona(clientes: Si_clientesInterface, contacto?: boolean) {
       if (contacto) {
-        this.router.navigate([`/pages/personas/${alumnos.aval1}`]);
+        this.router.navigate([`/pages/si_personas/${clientes.aval1}`]);
       } else {
-        this.router.navigate([`/pages/personas/alumno/${alumnos.idalumno}`]);
+        this.router.navigate([`/pages/si_personas/cliente/${clientes.idsi_cliente}`]);
       }
     }
-    viewPagoliquidacion(alumnos: AlumnosInterface) {
-      this.router.navigate([`/pages/pagoliquidacions/alumno/${alumnos.idalumno}`]);
+    viewPagoliquidacion(clientes: Si_clientesInterface) {
+      this.router.navigate([`/pages/si_pagoliquidacions/cliente/${clientes.idsi_cliente}`]);
     }
-    viewInmuebleasignado(alumnos: AlumnosInterface) {
-      this.router.navigate([`/pages/inmuebleasignados/alumno/${alumnos.idalumno}`]);
+    viewPago(clientes: Si_clientesInterface) {
+      this.router.navigate([`/pages/si_pagos/cliente/${clientes.idsi_cliente}`]);
     }
-    viewPago(alumnos: AlumnosInterface) {
-      this.router.navigate([`/pages/pagos/alumno/${alumnos.idalumno}`]);
-    }
-    viewLiquidacion(alumnos: AlumnosInterface) {
-      this.router.navigate([`/pages/liquidacions/alumno/${alumnos.idalumno}`]);
+    viewLiquidacion(clientes: Si_clientesInterface) {
+      this.router.navigate([`/pages/si_liquidacions/cliente/${clientes.idsi_cliente}`]);
     }
     pagarFactura(item: any) {
-      this.router.navigate([`/pages/pagos/producto/${item.idliquidacion}`]);
+      this.router.navigate([`/pages/si_pagos/producto/${item.idliquidacion}`]);
     }
-    insertFacturacion(alumnos: AlumnosInterface) {
-      const facturacion: FacturacionsInterface = {
-        alumno_idalumno: alumnos.idalumno
+    insertFacturacion(clientes: Si_clientesInterface) {
+      const facturacion: Si_facturacionsInterface = {
+        cliente_idcliente: clientes.idsi_cliente
       }
-      const disposable = this.dialogService.addDialog(FacturacionsAddModalComponent, facturacion)
+      const disposable = this.dialogService.addDialog(Si_facturacionsAddModalComponent, facturacion)
       .subscribe( data => {
           if (data) {
               this.facturacionShowToast(data);
@@ -140,16 +135,15 @@ export class ProfileComponent implements OnInit {
             this.toastrService.error(result.message);
         }
     }
-    viewFacturacion(alumnos: AlumnosInterface) {
-      this.router.navigate([`/pages/facturacions/alumno/${alumnos.idalumno}`]);
+    viewFacturacion(clientes: Si_clientesInterface) {
+      this.router.navigate([`/pages/si_facturacions/cliente/${clientes.idsi_cliente}`]);
     }
-    insertSugerencia(idcurso: number, curso: string) {
-      const sugerencia: SugerenciasInterface = {
-        alumno_idalumno: this.idalumno,
-        curso_idcurso: idcurso,
-        curso: curso
+    insertSugerencia(idservicio: number, servicio: string) {
+      const sugerencia: Si_sugerenciasInterface = {
+        cliente_idcliente: this.idsi_cliente,
+        servicio_idservicio: idservicio
       }
-      const disposable = this.dialogService.addDialog(SugerenciasAddModalComponent, sugerencia)
+      const disposable = this.dialogService.addDialog(Si_sugerenciasAddModalComponent, sugerencia)
       .subscribe( data => {
           if (data) {
               this.sugerenciaShowToast(data);
@@ -164,8 +158,8 @@ export class ProfileComponent implements OnInit {
             this.toastrService.error(result.message);
         }
     }
-    viewSugerencia(alumnos: AlumnosInterface) {
-      this.router.navigate([`/pages/sugerencias/alumno/${alumnos.idalumno}`]);
+    viewSugerencia(clientes: Si_clientesInterface) {
+      this.router.navigate([`/pages/si_sugerencias/cliente/${clientes.idsi_cliente}`]);
     }
 
 }
