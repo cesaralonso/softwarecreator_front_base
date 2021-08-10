@@ -1,7 +1,7 @@
-import { ResidentesService } from './../../../pages/residentes/components/residentes-table/residentes.service';
+import { Si_clientesService } from './../../../pages/si_clientes/components/si_clientes-table/si_clientes.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { AuthService } from './../../../shared/auth.service';
+import { AuthService } from './../../../shared/services/auth.service';
 import { Component } from '@angular/core';
 import { GlobalState } from '../../../global.state';
 import * as _ from 'lodash';
@@ -14,7 +14,7 @@ import * as _ from 'lodash';
 })
 export class BaPageTop {
 
-  _residente: any[] = [];
+  _cliente: any[] = [];
 
   isScrolled: boolean = false;
   isMenuCollapsed: boolean = false;
@@ -24,21 +24,21 @@ export class BaPageTop {
 
   changepasswordAcceso = false;
   
-  _residenteFiltered: any[] = [];
-  residenteFilter: string;
-  residente_idresidente: number;
+  _clienteFiltered: any[] = [];
+  clienteFilter: string;
+  cliente_idcliente: number;
 
   constructor(
     private _state: GlobalState, 
     private authService: AuthService,
     private toastrService: ToastrService,
     private router: Router,
-    private residentesService: ResidentesService) {
+    private clientesService: Si_clientesService) {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
     // SI ES CREADO UN RESIDENTE SE RECARGA LISTADO PARA INCLUIRLO
-    this._state.subscribe('residenteNuevo', (recargar: boolean) => {
+    this._state.subscribe('clienteNuevo', (recargar: boolean) => {
       if (recargar) {
         this.getResidente();
       }
@@ -73,11 +73,11 @@ export class BaPageTop {
 
   buscarProyecto(event) {
     event.preventDefault();
-    if (!this.residente_idresidente) {
-      this.toastrService.info('Debes primero elegir un residente.');
+    if (!this.cliente_idcliente) {
+      this.toastrService.info('Debes primero elegir un cliente.');
       return false;
     }
-    this.router.navigate([`/pages/residentes/${this.residente_idresidente}`]);
+    this.router.navigate([`/pages/si_clientes/${this.cliente_idcliente}`]);
   }
 
   toggleMenu() {
@@ -102,30 +102,30 @@ export class BaPageTop {
       this.toastrService.error(result.message);
     }
   }
-  getResidente(idresidente?: number) {
-      if (this.user.fraccionamiento && this.user.si_rol_idsi_rol === 2) {
-        this.residentesService.findByIdCondominio(this.user.fraccionamiento) // deberia ser allAsignados pero por algo no jala bien..
+  getResidente(idcliente?: number) {
+      /* if (this.user.servicio && this.user.si_rol_idsi_rol === 2) {
+        this.clientesService.findByIdServicio(this.user.servicio) // si se debe bloquear por servicio desde user info en back
         .subscribe(
             (data: any) => {
-                this._residenteFiltered = _.filter(data.result, row => row.viviendas);
-                this._residente = this._residenteFiltered;
+                this._clienteFiltered = _.filter(data.result, row => row.viviendas);
+                this._cliente = this._clienteFiltered;
               }
-        );
-      } else {
-        this.residentesService.all() // deberia ser allAsignados pero por algo no jala bien..
+        ); */
+      /* } else { */
+        this.clientesService.all()
         .subscribe(
             (data: any) => {
-                this._residenteFiltered = _.filter(data.result, row => row.viviendas);
-                this._residente = this._residenteFiltered;
+                this._clienteFiltered = _.filter(data.result, row => row.viviendas);
+                this._cliente = this._clienteFiltered;
               }
         );
-      }
+      /* } */
   }
     onKeydownEvent(key) {
         key = key.toLowerCase();
-        this._residenteFiltered = this._residente;
-        this._residenteFiltered = _.filter(this._residenteFiltered, row => 
-            row.persona_residente.toLowerCase().indexOf(key) > -1 || row.viviendas.toLowerCase().indexOf(key) > -1
+        this._clienteFiltered = this._cliente;
+        this._clienteFiltered = _.filter(this._clienteFiltered, row => 
+            row.persona_persona_idpersona.toLowerCase().indexOf(key) > -1 || row.servicios.toLowerCase().indexOf(key) > -1 // deben ser parte del objeto
         );
     }
 }
