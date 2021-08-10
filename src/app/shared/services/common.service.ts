@@ -185,4 +185,21 @@ export class CommonService {
         const date = moment(new Date()).tz('America/Mexico_City').format('HH:mm:ss'); 
         return date;
     }
+
+    getDate() {
+        var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        var f = new Date();
+        return meses[f.getMonth()] + " de " + f.getFullYear();
+    }
+
+    formatDateString(f: Date): string {
+        var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        return meses[f.getMonth()] + " de " + f.getFullYear();
+    }
+
+    getMonth(month: number) {
+        var meses = new Array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+        return meses[month - 1];
+    }
+
 }

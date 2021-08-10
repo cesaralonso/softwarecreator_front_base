@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Verificación de cuenta de usuario |  Plataforma Clientes</title>
+  <title>Verificación de cuenta de usuario |  Plataforma x</title>
   <link rel="manifest" href="manifest.json">
 
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon180X180.png">
@@ -75,7 +75,7 @@
 
             if ($res->success && $res->result[0]->exist) {
               echo "<p><strong>¡Tu cuenta ha sido verificada!.</strong></p>";
-              echo "<p>Ahora puedes <a href='index.html'><strong>Ingresar a  Portal Clientes</strong></a></p>";
+              echo "<p>Ahora puedes <a href='index.html'><strong>Ingresar a Portal</strong></a></p>";
             } else {
               echo "<p><strong>Error: Tu enlace se ha caducado o es incorrecto, por favor solicita uno nuevo.</strong></p>";
             }
