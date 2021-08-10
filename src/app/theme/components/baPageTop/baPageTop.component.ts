@@ -40,7 +40,7 @@ export class BaPageTop {
     // SI ES CREADO UN RESIDENTE SE RECARGA LISTADO PARA INCLUIRLO
     this._state.subscribe('clienteNuevo', (recargar: boolean) => {
       if (recargar) {
-        this.getResidente();
+        this.getCliente();
       }
     });
 
@@ -68,7 +68,7 @@ export class BaPageTop {
   }
 
   ngOnInit() {
-      this.getResidente();
+      this.getCliente();
   }
 
   buscarProyecto(event) {
@@ -102,7 +102,7 @@ export class BaPageTop {
       this.toastrService.error(result.message);
     }
   }
-  getResidente(idcliente?: number) {
+  getCliente() {
       /* if (this.user.servicio && this.user.si_rol_idsi_rol === 2) {
         this.clientesService.findByIdServicio(this.user.servicio) // si se debe bloquear por servicio desde user info en back
         .subscribe(

@@ -9,13 +9,13 @@
   </div>-->
   <!-- <div class="search" *ngIf="!user.idpropietario">
     <i class="ion-ios-search-strong" (click)="buscarProyecto($event)"></i>
-    <input type="text" placeholder="Filtro Casa / Nombre" [(ngModel)]="residenteFilter" (ngModelChange)="onKeydownEvent($event)" [ngModelOptions]="{standalone: true}">
+    <input type="text" placeholder="Filtro Casa / Nombre" [(ngModel)]="clienteFilter" (ngModelChange)="onKeydownEvent($event)" [ngModelOptions]="{standalone: true}">
   </div> 
   <div class="search" *ngIf="!user.idpropietario">
 
-    <select [(ngModel)]="residente_idresidente">
+    <select [(ngModel)]="cliente_idcliente">
       <option value="">SELECCIONA</option>
-      <option value="{{item.idresidente}}" *ngFor="let item of _residenteFiltered">{{item.persona_residente}}</option>
+      <option value="{{item.idcliente}}" *ngFor="let item of _clienteFiltered">{{item.persona_cliente}}</option>
     </select>
   </div> -->
 
@@ -31,7 +31,7 @@
           </small>
         </li>
         <li *ngIf="!isAuth" class="dropdown-item"><a routerLink="/login"><i class="fa fa-user"></i>Accesa</a></li>
-        <!-- <li *ngIf="isAuth && user.idpropietario" class="dropdown-item"><a routerLink="/pages/residentes/"><i class="fa fa-user"></i>Mi Panel</a></li> -->
+        <!-- <li *ngIf="isAuth && user.idpropietario" class="dropdown-item"><a routerLink="/pages/clientes/"><i class="fa fa-user"></i>Mi Panel</a></li> -->
         <li *ngIf="isAuth && changepasswordAcceso" class="dropdown-item"><a routerLink="/change-password"><i class="fa fa-cog"></i>Contraseña</a></li>
         <li *ngIf="isAuth" class="dropdown-item"><a href="#" (click)="logout()" class="signout"><i class="fa fa-power-off"></i>Cerrar sesión</a></li>
       </ul>
