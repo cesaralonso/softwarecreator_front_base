@@ -12,8 +12,8 @@ const replace = require('replace-in-file');
 
  // enter the value set as the --base-href flag when deploying to a live URL
  // if not deploying to a live URL, and only running locally, can leave blank, as the URL parsing fix will not be necessary
-const SITE_BASE_HREF = 'https://plataforma-x.com/';
-// const SITE_BASE_HREF = '';
+
+const SITE_BASE_HREF = '';
 const dist = 'dist';
 
 const ng2bootstrapmodalFix = {

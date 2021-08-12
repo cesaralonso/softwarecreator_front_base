@@ -29,7 +29,8 @@
     "sw-serve": "npm run sw-build && http-server dist -p 8080 -o",
     "fix-memory-limit": "cross-env LIMIT=2048 increase-memory-limit",
     "ci-deploy-fix": "ng build --prod --base-href \"https://plataforma-x.com/\" --output-hashing none && npm run fix-memory-limit && node fix-sw",
-    "ci-deploy": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --base-href \"https://plataforma-x.com/\" --output-hashing none && node fix-sw"
+    "ci-deploy": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --base-href \"https://plataforma-x.com/\" --output-hashing none && node fix-sw",
+    "ci-deploy-local": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng build --prod --base-href \"/\" --output-hashing none && node fix-sw-local"
   },
   "private": true,
   "dependencies": {
