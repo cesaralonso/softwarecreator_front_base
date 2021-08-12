@@ -15,9 +15,9 @@ import { CommonService } from '../../shared/services/common.service';
 
 
 @Component({
-  selector: 'clientes-profile',
-  templateUrl: './clientes-profile.component.html',
-  styleUrls: ['./clientes-profile.component.scss']
+  selector: 'profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
     item: any;
