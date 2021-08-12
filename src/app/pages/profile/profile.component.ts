@@ -1,5 +1,4 @@
 import { Si_liquidacionsInterface } from './../si_liquidacions/components/si_liquidacions-table/si_liquidacions.interface';
-/* import { LiquidacionsService } from './../si_liquidacions/components/si_liquidacions-table/si_liquidacions.service'; */
 import { Si_clientesInterface } from './../si_clientes/components/si_clientes-table/si_clientes.interface';
 import { Si_clientesResponseInterface } from './../si_clientes/components/si_clientes-table/si_clientes-response.interface';
 import { Si_clientesService } from './../si_clientes/components/si_clientes-table/si_clientes.service';
@@ -118,7 +117,7 @@ export class ProfileComponent implements OnInit {
     }
     insertFacturacion(clientes: Si_clientesInterface) {
       const facturacion: Si_facturacionsInterface = {
-        cliente_idcliente: clientes.idsi_cliente
+        si_cliente_idsi_cliente: clientes.idsi_cliente
       }
       const disposable = this.dialogService.addDialog(Si_facturacionsAddModalComponent, facturacion)
       .subscribe( data => {
@@ -140,8 +139,8 @@ export class ProfileComponent implements OnInit {
     }
     insertSugerencia(idservicio: number, servicio: string) {
       const sugerencia: Si_sugerenciasInterface = {
-        cliente_idcliente: this.idsi_cliente,
-        servicio_idservicio: idservicio
+        si_cliente_idsi_cliente: this.idsi_cliente,
+        si_servicio_idsi_servicio: idservicio
       }
       const disposable = this.dialogService.addDialog(Si_sugerenciasAddModalComponent, sugerencia)
       .subscribe( data => {
