@@ -97,11 +97,7 @@ export class ProfileComponent implements OnInit {
     }
     
     viewPersona(clientes: Si_clientesInterface, contacto?: boolean) {
-      if (contacto) {
-        this.router.navigate([`/pages/si_personas/${clientes.aval1}`]);
-      } else {
-        this.router.navigate([`/pages/si_personas/cliente/${clientes.idsi_cliente}`]);
-      }
+      this.router.navigate([`/pages/si_personas/cliente/${clientes.idsi_cliente}`]);
     }
     viewPagoliquidacion(clientes: Si_clientesInterface) {
       this.router.navigate([`/pages/si_pagoliquidacions/cliente/${clientes.idsi_cliente}`]);
