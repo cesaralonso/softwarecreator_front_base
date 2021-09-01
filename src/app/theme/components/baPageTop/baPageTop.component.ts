@@ -1,4 +1,4 @@
-import { Si_clientesService } from './../../../pages/si_clientes/components/si_clientes-table/si_clientes.service';
+/* import { Si_clientesService } from './../../../pages/si_clientes/components/si_clientes-table/si_clientes.service'; */
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../shared/services/auth.service';
@@ -33,7 +33,7 @@ export class BaPageTop {
     private authService: AuthService,
     private toastrService: ToastrService,
     private router: Router,
-    private clientesService: Si_clientesService) {
+    /* private clientesService: Si_clientesService */) {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
       this.isMenuCollapsed = isCollapsed;
     });
@@ -71,14 +71,23 @@ export class BaPageTop {
       this.getCliente();
   }
 
-  buscarProyecto(event) {
+  /* buscarOrden(folio, event) {
+    event.preventDefault();
+    if (!folio) {
+      this.toastrService.info('Debes primero elegir un folio.');
+      return false;
+    }
+    this.router.navigate([`/pages/ordenestados/orden/${folio}`]);
+  }
+
+  buscarCliente(event) {
     event.preventDefault();
     if (!this.cliente_idcliente) {
       this.toastrService.info('Debes primero elegir un cliente.');
       return false;
     }
-    this.router.navigate([`/pages/si_clientes/${this.cliente_idcliente}`]);
-  }
+    this.router.navigate([`/pages/ordens/cliente/${this.cliente_idcliente}`]);
+  } */
 
   toggleMenu() {
     this.isMenuCollapsed = !this.isMenuCollapsed;
@@ -103,29 +112,19 @@ export class BaPageTop {
     }
   }
   getCliente() {
-      /* if (this.user.servicio && this.user.si_rol_idsi_rol === 2) {
-        this.clientesService.findByIdServicio(this.user.servicio) // si se debe bloquear por servicio desde user info en back
+        /* this.clientesService.all()
         .subscribe(
             (data: any) => {
-                this._clienteFiltered = _.filter(data.result, row => row.viviendas);
+                this._clienteFiltered = data.result;
                 this._cliente = this._clienteFiltered;
               }
         ); */
-      /* } else { */
-        this.clientesService.all()
-        .subscribe(
-            (data: any) => {
-                this._clienteFiltered = _.filter(data.result, row => row.viviendas);
-                this._cliente = this._clienteFiltered;
-              }
-        );
-      /* } */
   }
     onKeydownEvent(key) {
         key = key.toLowerCase();
         this._clienteFiltered = this._cliente;
         this._clienteFiltered = _.filter(this._clienteFiltered, row => 
-            row.persona_persona_idpersona.toLowerCase().indexOf(key) > -1 || row.servicios.toLowerCase().indexOf(key) > -1 // deben ser parte del objeto
+            row.nombre.toLowerCase().indexOf(key) > -1 || row.razonsocial.toLowerCase().indexOf(key) > -1 // deben ser parte del objeto
         );
     }
 }

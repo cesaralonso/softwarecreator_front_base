@@ -3,21 +3,21 @@
   <a routerLink="/pages/dashboard" class="al-logo clearfix"><span>PROJECTNAME </span></a>
   <a href (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
   <!--
-    <div class="search">
-    <i class="ion-ios-search-strong" (click)="buscar(searchInput.value, $event)"></i>
-    <input #searchInput id="searchInput" type="text" placeholder="Proyecto Folio" (keydown.enter)="buscarProyecto(searchInput.value, $event)">
-  </div>-->
-  <!-- <div class="search" *ngIf="!user.idpropietario">
-    <i class="ion-ios-search-strong" (click)="buscarProyecto($event)"></i>
-    <input type="text" placeholder="Filtro Casa / Nombre" [(ngModel)]="clienteFilter" (ngModelChange)="onKeydownEvent($event)" [ngModelOptions]="{standalone: true}">
+  <div class="search">
+    <i class="ion-ios-search-strong" (click)="buscarOrden(searchInput.value, $event)"></i>
+    <input #searchInput id="searchInput" type="text" placeholder="Orden Folio" (keydown.enter)="buscarOrden(searchInput.value, $event)">
+  </div>
+  <div class="search" *ngIf="!user.idempleado">
+    <i class="ion-ios-search-strong" (click)="buscarCliente($event)"></i>
+    <input type="text" placeholder="Filtro Cliente" [(ngModel)]="clienteFilter" (ngModelChange)="onKeydownEvent($event)" [ngModelOptions]="{standalone: true}">
   </div> 
-  <div class="search" *ngIf="!user.idpropietario">
+  <div class="search" *ngIf="!user.idempleado">
 
-    <select [(ngModel)]="cliente_idcliente">
+    <select [(ngModel)]="cliente_idcliente" class="form-control">
       <option value="">SELECCIONA</option>
-      <option value="{{item.idcliente}}" *ngFor="let item of _clienteFiltered">{{item.persona_cliente}}</option>
+      <option value="{{item.idcliente}}" *ngFor="let item of _clienteFiltered">{{item.razonsocial}}</option>
     </select>
-  </div> -->
+  </div>-->
 
   <div class="user-profile clearfix">
     <div class="dropdown al-user-profile">
