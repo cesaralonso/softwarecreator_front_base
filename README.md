@@ -13,3 +13,14 @@
 #}
 
 
+# npm install --save-dev --unsafe-perm node-sass
+# npm uninstall node-sass && npm i node-sass@4.14 && npm rebuild node-sass && ng serve -o
+
+
+
+INSTALAR BOOTSTRAP CON NG ADD
+ng add ngx-bootstrap
+
+
+INSTALAR MATERIAL
+ng add @angular/material
