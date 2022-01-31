@@ -1,4 +1,4 @@
-import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+/* import { BootstrapModalModule } from 'ng2-bootstrap-modal'; */
 import { AuthLocalstorage } from './shared/auth-localstorage.service';
 import { AuthService } from './shared/auth.service';
 import { AuthGuard } from './shared/services/auth-guard.service';
@@ -72,7 +72,7 @@ export type StoreType = {
         prefix: 'my-app',
         storageType: 'localStorage'
     }),
-    BootstrapModalModule.forRoot({ container: document.body }),
+    /* BootstrapModalModule.forRoot({ container: document.body }), */
   ],
   entryComponents: [
   ],

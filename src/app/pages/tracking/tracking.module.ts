@@ -1,6 +1,6 @@
 import { AgmCoreModule } from '@agm/core';
 import { TrackingMapComponent } from './components/map/map.component';
-import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+/* import { BootstrapModalModule } from 'ng2-bootstrap-modal'; */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppTranslationModule } from '../../app.translation.module';
@@ -14,7 +14,7 @@ import { TrackingComponent } from './tracking.component';
     AppTranslationModule,
     NgaModule,
     routing,
-    BootstrapModalModule.forRoot({ container: document.body }),
+    /* BootstrapModalModule.forRoot({ container: document.body }), */
     AgmCoreModule
   ],
   declarations: [
