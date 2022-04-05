@@ -1,9 +1,8 @@
 import { AuthService } from './../../shared/services/auth.service';
-import { ToastrService } from 'ngx-toastr';
+import { ToasterService } from './../../shared/services/toaster.service';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import * as moment from 'moment-timezone';
-import { take } from 'rxjs/operators';
 
 
 @Component({
@@ -26,7 +25,7 @@ export class Dashboard implements AfterViewInit, OnInit {
   user: any;
 
   constructor(
-    private toastrService: ToastrService,
+    private toastrService: ToasterService,
     private authService: AuthService) {
       
       // Buscar permisos del usuario en el módulo

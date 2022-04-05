@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './../../shared/services/auth.service';
 import { DialogService } from 'ng2-bootstrap-modal';
-import { ToastrService } from 'ngx-toastr';
+import { ToasterService } from './../../shared/services/auth.service';
 import { Si_facturacionsInterface } from './../si_facturacions/components/si_facturacions-table/si_facturacions.interface';
 import { Si_facturacionsAddModalComponent } from './../si_facturacions/components/si_facturacions-table/si_facturacions-add-modal/si_facturacions-add-modal.component';
 import { Si_sugerenciasInterface } from './../si_sugerencias/components/si_sugerencias-table/si_sugerencias.interface';
@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
 
     constructor(
       private service: Si_clientesService, 
-      private toastrService: ToastrService, 
+      private toastrService: ToasterService, 
       private dialogService: DialogService, 
       private authService: AuthService, 
       private route: ActivatedRoute, 

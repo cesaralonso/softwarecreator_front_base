@@ -2,7 +2,7 @@ import { LoginResponseInterface } from './../login/login-response.interface';
 import { LoginInterface } from './../login/login.interface';
 import { AuthService } from './../../shared/services/auth.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToasterService } from './../../shared/services/toaster.service';
 import { ChangePasswordService } from './change-password.service';
 import { Component } from '@angular/core';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
@@ -31,7 +31,7 @@ export class ChangePasswordComponent {
   constructor(fb: FormBuilder,
     private authService: AuthService,
     private service: ChangePasswordService,
-    private toastrService: ToastrService,
+    private toastrService: ToasterService,
     private router: Router,
     ) {
 

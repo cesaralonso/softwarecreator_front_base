@@ -8,4 +8,4 @@ export const routes: Routes = [
     component: UnauthorizedComponent
     }
   ];
-export const routing: ModuleWithProviders = RouterModule.forChild(routes);
+export const routing: ModuleWithProviders<any> = RouterModule.forChild(routes);
