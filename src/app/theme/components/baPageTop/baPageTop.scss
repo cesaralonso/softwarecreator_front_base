@@ -1,7 +1,7 @@
 @import '../../sass/conf/conf';
 @import '../../components/baMsgCenter/baMsgCenter';
 
-:host /deep/ {
+:host  ::ng-deep {
 
   .page-top {
     background-color: $sidebar;
