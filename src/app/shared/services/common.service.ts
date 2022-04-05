@@ -171,6 +171,17 @@ export class CommonService {
         return now;
     }
 
+    getFechaActual(): string {
+        const fecha = new Date();
+        const mes = fecha.getMonth() + 1;
+        const dia = fecha.getDate();
+        const ano = fecha.getFullYear();
+        let _dia, _mes;
+        _dia = (dia < 10) ? `0${dia}` : dia;
+        _mes = (mes < 10) ? `0${mes}` : mes;
+       return `${_dia}/${_mes}/${ano}`;
+    }
+
     getMomentDateTime(): any {
         const date = moment(new Date()).tz('America/Mexico_City').format('YYYY-MM-DD HH:mm:ss'); 
         return date;
