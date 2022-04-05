@@ -1,6 +1,6 @@
 import { Injectable, ApplicationRef } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class StateService {
     
     state = {

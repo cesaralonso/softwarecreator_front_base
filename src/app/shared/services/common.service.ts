@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment-timezone';
 
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CommonService {
 
     constructor() {

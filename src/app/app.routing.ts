@@ -6,4 +6,4 @@ export const routes: Routes = [
   { path: '**', redirectTo: 'login' }
 ];
 
-export const routing: ModuleWithProviders = RouterModule.forRoot(routes, { useHash: true });
+export const routing: ModuleWithProviders<any> = RouterModule.forRoot(routes, { useHash: true, relativeLinkResolution: 'legacy' });

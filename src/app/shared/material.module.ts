@@ -30,6 +30,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ToasterService } from './services/toaster.service';
+
 
 
 @NgModule({
@@ -68,6 +72,8 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS } from '@angu
     ScrollingModule,
     MatSnackBarModule,
     MatExpansionModule,
+    MatSlideToggleModule,
+    MatTooltipModule
   ],
   exports: [
     MatStepperModule,
@@ -102,13 +108,16 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DEFAULT_OPTIONS } from '@angu
     ScrollingModule,
     MatSnackBarModule,
     MatExpansionModule,
+    MatSlideToggleModule,
+    MatTooltipModule
   ],
   providers: [
     {
       provide: MatDialogRef,
       useValue: {}
     },
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
+    ToasterService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

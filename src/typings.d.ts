@@ -42,3 +42,4 @@ interface JQuery {
   easyPieChart;
 }
 declare const Capacitor: any;
+declare var JQuery: any;

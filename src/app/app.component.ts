@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PushNotificationService } from './shared/services/push-notifications.service';
 import { SwUpdate } from '@angular/service-worker';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ToasterService } from './shared/services/toaster.service';
 import { AuthService } from './shared/services/auth.service';
 import { GlobalState } from './global.state';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from './theme/services';
@@ -32,7 +32,7 @@ export class App {
               private _spinner: BaThemeSpinner,
               private themeConfig: BaThemeConfig,
               private pushNotificationService: PushNotificationService,
-              private toastrService: ToastrService,
+              private toastrService: ToasterService,
               private authService: AuthService,
               private router: Router,
               private swUpdate: SwUpdate) {

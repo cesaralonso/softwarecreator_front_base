@@ -1,48 +1,74 @@
-import { AuthService } from './auth.service';
+  
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
+import { environment } from '../../../environments/environment';
+import * as socketIo from 'socket.io-client';
+import { Action, User, Message, Event } from '../models';
+import { CommonService } from './common.service';
 
 
-declare let sock: any;
+@Injectable({ providedIn: 'root' })
+export class SocketIOService {
+    serverUrl: string;
+    user: any;
 
-@Injectable()
-export class SocketService {
+    constructor(
+        private authService: AuthService,
+        private commonService: CommonService) {
+        this.serverUrl = environment.server;
+        // USER
+        this.user = this.authService.useJwtHelper();
+    }
 
-  _sock: any;
-  user: any;
+    private socket;
 
-  constructor(private authService: AuthService) {
+    initSocket(): void {
+        this.socket = socketIo(this.serverUrl);
+    }
 
-      this.user = this.authService.useJwtHelper(); 
-      this._sock = sock;
-      console.log('_sock', this._sock);
-  }
+    send(message: Message): void {
 
-  sender(send) {
+        const fecha = this.commonService.getMomentTime();
+        const hora = this.commonService.getMomentDate();
+        
+        // Send it now
+        message['from'] = this.user;
+        message['date'] = fecha;
+        message['hour'] = hora;
 
-      // FECHA Y HORA ACTUAL
-      const date = new Date();
-      const year = date.getFullYear();
-      let month = (date.getMonth() + 1).toString();
-      month = ((+month < 10) ? '0' : '') + month;
-      let day = date.getDate().toString();
-      day = ((+day < 10) ? '0' : '') + day;
-      let hours = date.getHours().toString();
-      hours = ((+hours < 10) ? '0' : '') + hours;
-      let minutes = date.getMinutes().toString();
-      minutes = ((+minutes < 10) ? '0' : '') + minutes;
+        console.log('send message', message);
 
-      const fecha = `${year}-${month}-${day}`;
-      const hora = `${hours}:${minutes}`;
+        if (message.type === 'ALERTA') {
+            this.socket.emit('message', message);
+        } else if (message.type === 'TRACKING') {
+            this.socket.emit('tracking', message);
+        }
+    }
 
-      const _send = JSON.parse(send);
+    onMessage(): Observable<Message> {
+        return new Observable<Message>(observer => {
+            console.log('onMessage');
+            this.socket.on('message', (data: Message) => {
+                    console.log('onMessage data', data);
+                    observer.next(data);
+                });
+        });
+    }
 
-      // Send it now
-      _send['user'] = this.user;
-      _send['fecha'] = fecha;
-      _send['hora'] = hora;
+    onTracking(): Observable<Message> {
+        return new Observable<Message>(observer => {
+            console.log('onTracking');
+            this.socket.on('tracking', (data: Message) => {
+                    console.log('onTracking data', data);
+                    observer.next(data);
+                });
+        });
+    }
 
-      const newsend = JSON.stringify(_send);
-      this._sock.send(newsend);
-  }
-
+    onEvent(event: Event): Observable<any> {
+        return new Observable<Event>(observer => {
+            this.socket.on(event, () => observer.next());
+        });
+    }
 }

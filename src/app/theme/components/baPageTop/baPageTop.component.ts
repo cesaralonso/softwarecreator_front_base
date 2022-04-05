@@ -1,5 +1,5 @@
 /* import { Si_clientesService } from './../../../pages/si_clientes/components/si_clientes-table/si_clientes.service'; */
-import { ToastrService } from 'ngx-toastr';
+import { ToasterService } from './../../../shared/services/toaster.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../shared/services/auth.service';
 import { Component } from '@angular/core';
@@ -31,7 +31,7 @@ export class BaPageTop {
   constructor(
     private _state: GlobalState, 
     private authService: AuthService,
-    private toastrService: ToastrService,
+    private toastrService: ToasterService,
     private router: Router,
     /* private clientesService: Si_clientesService */) {
     this._state.subscribe('menu.isCollapsed', (isCollapsed) => {

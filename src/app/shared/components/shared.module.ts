@@ -6,25 +6,22 @@ import { ChartbarrasComponent } from './chart-barras/chart-barras.component';
 
 
 @NgModule({
-  declarations: [
-    MapVisitasComponent,
-    ChartbarrasComponent
-  ],
-  imports: [
-    CommonModule, 
-    AgmCoreModule
-  ],
-  exports: [
-    MapVisitasComponent,
-    ChartbarrasComponent
-  ],
-  schemas: [
-    NO_ERRORS_SCHEMA
-  ],
-  entryComponents: [
-  ],
-  providers: [
-  ]
+    declarations: [
+        MapVisitasComponent,
+        ChartbarrasComponent
+    ],
+    imports: [
+        CommonModule,
+        AgmCoreModule
+    ],
+    exports: [
+        MapVisitasComponent,
+        ChartbarrasComponent
+    ],
+    schemas: [
+        NO_ERRORS_SCHEMA
+    ],
+    providers: []
 })
 export class SharedModule {
 }

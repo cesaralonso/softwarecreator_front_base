@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { SwPush } from '@angular/service-worker';
 
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PushNotificationService {
 
   constructor(private http: HttpClient,

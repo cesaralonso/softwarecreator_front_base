@@ -1,6 +1,6 @@
 import { throwError as observableThrowError, Observable, throwError, Subject } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
-import { ToastrService } from 'ngx-toastr';
+import { ToasterService } from './../../shared/services/toaster.service';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
@@ -10,11 +10,14 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AuthService {
     private internalAuthChanged = new Subject<boolean>();
     
     token: string;
+    idproceso: number | null;
+    idcliente: number | null;
+    idacopio: number | null;
     user_modules: any[];
     isLoggedIn: boolean = false;
     recordarSesion: boolean = false;
@@ -29,7 +32,7 @@ export class AuthService {
         private _http: HttpClient, 
         private _configuration: Configuration,
         private router: Router, 
-        private toastrService: ToastrService,
+        private toastrService: ToasterService,
         public jwtHelper: JwtHelperService) {
 
         this.headers = new HttpHeaders();
@@ -41,6 +44,9 @@ export class AuthService {
         if (this.recordarSesion) {
             this.isLoggedIn = (localStorage.getItem('isLoggedIn') === 'true') ? true : false;
             this.token = (localStorage.getItem('token')) ? localStorage.getItem('token') : '';
+            this.idproceso = (localStorage.getItem('idproceso')) ? +localStorage.getItem('idproceso') : null;
+            this.idcliente = (localStorage.getItem('idcliente')) ? +localStorage.getItem('idcliente') : null;
+            this.idacopio = (localStorage.getItem('idacopio')) ? +localStorage.getItem('idacopio') : null;
             this.user_modules = (localStorage.getItem('user_modules')) ? JSON.parse(localStorage.getItem('user_modules').toString()) : [];
         }
     }
@@ -76,6 +82,9 @@ export class AuthService {
                     this.updateAuthStatus(true);
 
                     this.token = response.token;
+                    this.idproceso = response.idproceso;
+                    this.idcliente = response.user.idcliente;
+                    this.idacopio = response.user.idacopio;
                     this.recordarSesion = values.recordarSesion;
                     localStorage.setItem('recordarSesion', values.recordarSesion.toString());
                     
@@ -91,6 +100,9 @@ export class AuthService {
                     localStorage.setItem('email', response.email);
                     localStorage.setItem('idrol', response.idrol);
                     localStorage.setItem('token', response.token);
+                    localStorage.setItem('idproceso', response.user.proceso_idproceso || null);
+                    localStorage.setItem('idcliente', response.user.idcliente || null);
+                    localStorage.setItem('idacopio', response.user.idacopio || null);
 
                     if (values.recordarSesion) {
                         localStorage.setItem('isLoggedIn', 'true');
@@ -109,15 +121,14 @@ export class AuthService {
             }));
     }
 
-
     navigateToFirstModule() {
-        this.router.navigate(['pages/dashboard']);
-        /*if (this.stateService.state.user.iduser === 1) {
-            this.router.navigate(['pages/proyectos']);
+        if (this.idcliente) {
+            this.router.navigate(['pages/pedidos']);
+        } else if (this.idacopio) {
+            this.router.navigate(['pages/recepcionacopios']);
         } else {
-            const navigate = this.user_modules.filter(o => o.acceso)[0].path;
-            this.router.navigate([navigate]);
-        }*/
+            this.router.navigate(['pages/pedidos']);
+        }
     }
 
     logout(): Observable<any> {
@@ -137,6 +148,9 @@ export class AuthService {
 
                     this.token = '';
                     this.isLoggedIn = false;
+                    this.idproceso = null;
+                    this.idcliente = null;
+                    this.idacopio = null;
                     this.user_modules = [];
 
                     localStorage.removeItem('isLoggedIn');
@@ -146,7 +160,9 @@ export class AuthService {
                     localStorage.removeItem('email');
                     localStorage.removeItem('iduser');
                     localStorage.removeItem('idrol');
-                   
+                    localStorage.removeItem('idproceso');
+                    localStorage.removeItem('idcliente');
+                    localStorage.removeItem('idacopio');
                     this.router.navigate(['/login']);
                 } else {
                     this.toastrService.error('La sesión no se cerró correctamente.');
